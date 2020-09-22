@@ -4,8 +4,18 @@ import classnames from 'classnames';
 import { ComponentProps } from '../index';
 import './index.css';
 
-const Paragraph = (props: ComponentProps) => (
-  <p className={classnames('Paragraph', props.className)}>
+type Props = ComponentProps & {
+  indent?: true,
+}
+
+const Paragraph = (props: Props) => (
+  <p
+    className={classnames(
+      'Paragraph',
+       props.className,
+       { indent: props.indent },
+    )}
+  >
     { props.children }
   </p>
 )

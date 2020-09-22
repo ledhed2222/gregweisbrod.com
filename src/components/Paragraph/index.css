@@ -1,3 +1,9 @@
 .Paragraph {
-  align-self: flex-start;
+  text-align: left;
+  font-size: 18px;
+  margin: 20px 0;
+}
+
+.Paragraph.indent {
+  text-indent: 30px;
 }
