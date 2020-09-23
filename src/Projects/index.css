@@ -14,9 +14,15 @@
 }
 
 .Projects .Project .ProjectCopy {
-  max-width: 50%;
+  margin: 0 10%;
 }
 
 .Projects .Project .ProjectCopy .Header {
   color: pink;
+}
+
+@media screen and (max-width: 400px) {
+  .Projects .Project .ProjectImg {
+    display: none;
+  }
 }
