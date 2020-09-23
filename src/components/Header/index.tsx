@@ -4,8 +4,18 @@ import classnames from 'classnames';
 import { ComponentProps } from '../index';
 import './index.css';
 
-const Header = (props: ComponentProps) => (
-  <header className={classnames('Header', props.className)}>
+type Props = ComponentProps & {
+  small?: true,
+}
+
+const Header = (props: Props) => (
+  <header
+    className={classnames(
+      'Header',
+      props.className,
+      { small: props.small },
+    )}
+  >
     { props.children }
   </header>
 );

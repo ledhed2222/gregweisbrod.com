@@ -9,7 +9,7 @@ const Home = () => (
       Hi there!
     </Header>
     <Header className="SubHeader">
-      Welcome to my site
+      Welcome to my little slice of the Internet <span role="img" aria-label="wave">👋</span>
     </Header>
   </div>
 );

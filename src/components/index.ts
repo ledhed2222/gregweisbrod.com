@@ -11,5 +11,4 @@ export interface ComponentProps {
 export {
   Header,
   Paragraph,
-}
-
+};

@@ -1,0 +1,22 @@
+.Projects .Project {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 0 50px 0;
+}
+
+.Projects .Project:nth-child(2n+1) {
+  flex-direction: row-reverse;
+}
+
+.Projects .Project .ProjectImg {
+  height: 300px;
+}
+
+.Projects .Project .ProjectCopy {
+  max-width: 50%;
+}
+
+.Projects .Project .ProjectCopy .Header {
+  color: pink;
+}

@@ -7,6 +7,7 @@ import {
 
 import NavBar from './NavBar';
 import Home from '../Home';
+import Projects from '../Projects';
 import About from '../About';
 import './index.css';
 
@@ -18,6 +19,9 @@ const App = () => (
         <Switch>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route exact path="/projects">
+            <Projects />
           </Route>
           <Route exact path="/about">
             <About />
