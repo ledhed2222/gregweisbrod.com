@@ -1,0 +1,45 @@
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.App a {
+  color: white;
+  text-decoration: none;
+}
+
+.App a:hover {
+  color: pink;
+}
+
+.App .ContentPortal {
+  width: 95%;
+  max-width: 1100px;
+  padding: 20px 0 0 0;
+}
+
+.App .ContentPortal > * {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.App .NavBar {
+  width: 100%;
+  border-bottom: 1px solid white;
+}
+
+.App .NavBar ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  list-style: none;
+}
+
+.App .NavBar ul > li {
+  margin: 0 40px 0 0;
+}

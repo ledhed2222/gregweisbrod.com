@@ -1,0 +1,10 @@
+.Paragraph {
+  text-align: left;
+  font-size: 18px;
+  margin: 20px 0;
+  line-height: 30px;
+}
+
+.Paragraph.indent {
+  text-indent: 30px;
+}
