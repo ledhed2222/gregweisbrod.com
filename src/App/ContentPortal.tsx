@@ -24,7 +24,9 @@ const ContentPortal = (props: Props) => {
           timeout={300}
         >
           <div className="Content">
-            { props.children }
+            <Switch location={location}>
+              { props.children }
+            </Switch>
           </div>
         </CSSTransition>
       </TransitionGroup>
