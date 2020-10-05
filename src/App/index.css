@@ -22,7 +22,26 @@
   padding: 20px 0 0 0;
 }
 
-.App .ContentPortal > * {
+.App .ContentPortal .Content.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.App .ContentPortal .Content.fade-enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+}
+
+.App .ContentPortal .Content.fade-exit {
+  opacity: 1;
+}
+
+.App .ContentPortal .Content.fade-exit-active {
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+}
+
+.App .ContentPortal .Content > * {
   width: 100%;
   display: flex;
   flex-direction: column;
