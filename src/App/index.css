@@ -32,12 +32,7 @@
 }
 
 .App .ContentPortal .Content.fade-exit {
-  opacity: 1;
-}
-
-.App .ContentPortal .Content.fade-exit-active {
-  opacity: 0;
-  transition: opacity 250ms ease-out;
+  display: none;
 }
 
 .App .ContentPortal .Content > * {
