@@ -24,7 +24,6 @@
 
 .App .ContentPortal .Content.fade-enter {
   opacity: 0;
-  z-index: 1;
 }
 
 .App .ContentPortal .Content.fade-enter-active {
