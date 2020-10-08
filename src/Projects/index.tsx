@@ -4,9 +4,16 @@ import { Header } from '../components';
 import Project, { Props as ProjectType } from './Project';
 import xpringRuby from './xpring-ruby.png';
 import ewitool from './ewitool.png';
+import supercollider_cubes from './supercollider_cubes.gif';
 import './index.css';
 
 const projectList: Array<ProjectType> = [
+  {
+    title: 'SuperCollider Cubes (WIP)',
+    imageSrc: supercollider_cubes,
+    desc: 'Interactive web-based real-time synthesizer using HLS/WebRTC and WebSockets for audio streaming. All synthesis happens on the server and is streamed to all clients',
+    link: 'https://github.com/ledhed2222/supercollider_cubes',
+  },
   {
     title: 'xpring-ruby',
     imageSrc: xpringRuby,
