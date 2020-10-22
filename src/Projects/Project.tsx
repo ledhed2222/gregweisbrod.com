@@ -11,11 +11,11 @@ export interface Props {
 
 const Project = (props: Props) => (
   <div className="Project">
-    <a href={props.link} target="_blank">
-      <img src={props.imageSrc} className="ProjectImg" />
+    <a href={props.link} target="_blank" rel="noopener noreferrer">
+      <img src={props.imageSrc} className="ProjectImg" alt="" />
     </a>
     <div className="ProjectCopy">
-      <a href={props.link} target="_blank">
+      <a href={props.link} target="_blank" rel="noopener noreferrer">
         <Header small>{props.title}</Header>
       </a>
       <Paragraph>{props.desc}</Paragraph>
