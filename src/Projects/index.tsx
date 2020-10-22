@@ -33,7 +33,7 @@ const Projects = () => (
     <Header>
       Projects
     </Header>
-    { projectList.map((project) => <Project {...project} />) }
+    { projectList.map((project, i) => <Project key={i} {...project} />) }
   </div>
 );
 

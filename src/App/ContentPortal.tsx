@@ -1,4 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, {
+  ReactNode,
+  useRef,
+} from 'react';
 import {
   Switch,
   useLocation,
@@ -14,10 +17,11 @@ interface Props {
 
 const ContentPortal = (props: Props) => {
   const location = useLocation();
+  const ref = useRef(null);
 
   return (
     <div className="ContentPortal">
-      <TransitionGroup>
+      <TransitionGroup nodeRef={ref}>
         <CSSTransition
           key={location.key}
           classNames="fade"

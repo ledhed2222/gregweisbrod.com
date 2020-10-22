@@ -35,7 +35,7 @@ const App = () => (
       <nav className="NavBar">
         <ul>
           { ROUTES.map((route) => (
-            <li>
+            <li key={route.path}>
               <NavLink exact to={route.path} activeClassName="currentPage">
                 { route.name }
               </NavLink>
@@ -45,7 +45,7 @@ const App = () => (
       </nav>
       <ContentPortal>
         { ROUTES.map((route) => (
-          <Route exact path={route.path}>
+          <Route exact path={route.path} key={route.path}>
             { route.component }
           </Route>
         ))}
