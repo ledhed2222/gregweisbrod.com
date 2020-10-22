@@ -2,29 +2,53 @@ import React from 'react';
 import {
   BrowserRouter,
   Route,
+  NavLink,
 } from 'react-router-dom';
 
-import NavBar from './NavBar';
 import ContentPortal from './ContentPortal';
 import Home from '../Home';
 import Projects from '../Projects';
 import About from '../About';
 import './index.css';
 
+const ROUTES = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home,
+  },
+  {
+    path: '/projects',
+    name: 'Projects',
+    component: Projects,
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About,
+  },
+];
+
 const App = () => (
   <div className="App">
     <BrowserRouter>
-      <NavBar />
+      <nav className="NavBar">
+        <ul>
+          { ROUTES.map((route) => (
+            <li>
+              <NavLink exact to={route.path} activeClassName="currentPage">
+                { route.name }
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
       <ContentPortal>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route exact path="/projects">
-          <Projects />
-        </Route>
-        <Route exact path="/about">
-          <About />
-        </Route>
+        { ROUTES.map((route) => (
+          <Route exact path={route.path}>
+            { route.component }
+          </Route>
+        ))}
       </ContentPortal>
     </BrowserRouter>
   </div>
