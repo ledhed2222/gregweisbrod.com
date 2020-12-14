@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Header, Paragraph } from '../components';
 
+const EMAIL = 'greg.weisbrod@pm.me';
+
 const About = () => (
   <div className="About">
     <Header>
@@ -12,6 +14,9 @@ const About = () => (
     </Paragraph>
     <Paragraph>
       This site will hold various personal projects across software and music. I might even add a blog in the future if I'm feeling particularly ambitious. Thanks for visiting!
+    </Paragraph>
+    <Paragraph>
+      You may contact me at <a href={`mailto:${EMAIL}`} target="_blank" rel="noopener noreferrer">{EMAIL}</a>.
     </Paragraph>
   </div>
 );
