@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Header, Paragraph } from '../components';
 
-const EMAIL = 'greg.weisbrod@pm.me';
+const EMAIL = 'greg.weisbrod@gmail.com';
 
 const About = () => (
   <div className="About">
