@@ -13,7 +13,10 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-transition-group": "^4.4.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
     "classnames": "^2.2.6",
+    "eslint": "^7.18.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
@@ -26,7 +29,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "git checkout master && git pull && npm run build && firebase deploy"
+    "deploy": "git checkout master && git pull && npm run build && firebase deploy",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx"
   },
   "eslintConfig": {
     "extends": "react-app"
