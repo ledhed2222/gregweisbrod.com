@@ -13,9 +13,9 @@ import {
 
 interface Props {
   children: ReactNode,
-};
+}
 
-const ContentPortal = (props: Props) => {
+const ContentPortal = (props: Props): ReactNode => {
   const location = useLocation();
   const ref = useRef(null);
 
