@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { Header, Paragraph } from '../components';
 
 const EMAIL = 'greg.weisbrod@gmail.com';
 
-const About = () => (
+const About = (): ReactNode => (
   <div className="About">
     <Header>
       About Me

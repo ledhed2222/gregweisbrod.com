@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import {
   BrowserRouter,
   Route,
@@ -11,7 +11,13 @@ import Projects from '../Projects';
 import About from '../About';
 import './index.css';
 
-const ROUTES = [
+interface Route {
+  path: string,
+  name: string,
+  component: ReactNode,
+}
+
+const ROUTES: Array<Route> = [
   {
     path: '/',
     name: 'Home',
@@ -29,7 +35,7 @@ const ROUTES = [
   },
 ];
 
-const App = () => (
+const App = (): ReactNode => (
   <div className="App">
     <BrowserRouter>
       <nav className="NavBar">

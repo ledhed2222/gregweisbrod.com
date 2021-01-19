@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { Header } from '../components';
 import Project, { Props as ProjectType } from './Project';
@@ -28,7 +28,7 @@ const projectList: Array<ProjectType> = [
   },
 ];
 
-const Projects = () => (
+const Projects = (): ReactNode => (
   <div className="Projects">
     <Header>
       Projects
