@@ -33,7 +33,16 @@
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "react-app",
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ]
   },
   "browserslist": {
     "production": [
