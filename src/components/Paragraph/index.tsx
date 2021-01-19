@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 
 import { ComponentProps } from '../index';
@@ -8,7 +8,7 @@ type Props = ComponentProps & {
   indent?: true,
 }
 
-const Paragraph = (props: Props): ReactNode => (
+const Paragraph = (props: Props): JSX.Element => (
   <p
     className={classnames(
       'Paragraph',

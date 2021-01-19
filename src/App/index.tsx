@@ -11,13 +11,13 @@ import Projects from '../Projects';
 import About from '../About';
 import './index.css';
 
-interface Route {
+interface RouteDef {
   path: string,
   name: string,
   component: ReactNode,
 }
 
-const ROUTES: Array<Route> = [
+const ROUTES: Array<RouteDef> = [
   {
     path: '/',
     name: 'Home',
@@ -35,7 +35,7 @@ const ROUTES: Array<Route> = [
   },
 ];
 
-const App = (): ReactNode => (
+const App = (): JSX.Element => (
   <div className="App">
     <BrowserRouter>
       <nav className="NavBar">
