@@ -15,7 +15,7 @@ interface Props {
   children: ReactNode,
 }
 
-const ContentPortal = (props: Props): ReactNode => {
+const ContentPortal = (props: Props): JSX.Element => {
   const location = useLocation();
   const ref = useRef(null);
 

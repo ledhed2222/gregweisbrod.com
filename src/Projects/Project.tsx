@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { Header, Paragraph } from '../components';
 
@@ -9,7 +9,7 @@ export interface Props {
   link: string,
 }
 
-const Project = (props: Props): ReactNode => (
+const Project = (props: Props): JSX.Element => (
   <div className="Project">
     <a href={props.link} target="_blank" rel="noopener noreferrer">
       <img src={props.imageSrc} className="ProjectImg" alt="" />

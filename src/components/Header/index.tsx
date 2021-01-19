@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 
 import { ComponentProps } from '../index';
@@ -8,7 +8,7 @@ type Props = ComponentProps & {
   small?: true,
 }
 
-const Header = (props: Props): ReactNode => (
+const Header = (props: Props): JSX.Element => (
   <header
     className={classnames(
       'Header',
