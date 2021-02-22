@@ -7,7 +7,7 @@ import ewitool from './ewitool.png';
 import supercollider_cubes from './supercollider_cubes.gif';
 import './index.css';
 
-const projectList: Array<ProjectType> = [
+const PROJECT_LIST: Array<ProjectType> = [
   {
     title: 'SuperCollider Cubes (WIP)',
     imageSrc: supercollider_cubes,
@@ -33,7 +33,7 @@ const Projects = (): JSX.Element => (
     <Header>
       Projects
     </Header>
-    { projectList.map((project, i) => <Project key={i} {...project} />) }
+    { PROJECT_LIST.map((project, i) => <Project key={i} {...project} />) }
   </div>
 );
 

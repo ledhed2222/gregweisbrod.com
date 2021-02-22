@@ -1,11 +1,11 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import {
   BrowserRouter,
   Route,
   NavLink,
 } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 
-import ContentPortal from './ContentPortal';
 import Home from '../Home';
 import Projects from '../Projects';
 import About from '../About';
@@ -14,24 +14,24 @@ import './index.css';
 interface RouteDef {
   path: string,
   name: string,
-  component: ReactNode,
+  Component: () => JSX.Element,
 }
 
 const ROUTES: Array<RouteDef> = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    Component: Home,
   },
   {
     path: '/projects',
     name: 'Projects',
-    component: Projects,
+    Component: Projects,
   },
   {
     path: '/about',
     name: 'About',
-    component: About,
+    Component: About,
   },
 ];
 
@@ -40,22 +40,33 @@ const App = (): JSX.Element => (
     <BrowserRouter>
       <nav className="NavBar">
         <ul>
-          { ROUTES.map((route) => (
-            <li key={route.path}>
-              <NavLink exact to={route.path} activeClassName="currentPage">
-                { route.name }
+          { ROUTES.map(({ path, name }) => (
+            <li key={path}>
+              <NavLink exact to={path} activeClassName="currentPage">
+                { name }
               </NavLink>
             </li>
           ))}
         </ul>
       </nav>
-      <ContentPortal>
-        { ROUTES.map((route) => (
-          <Route exact path={route.path} key={route.path}>
-            { route.component }
+      <div className="ContentPortal">
+        { ROUTES.map(({ path, Component }) => (
+          <Route exact path={path} key={path}>
+            {({ match }) => (
+              <CSSTransition
+                in={match != null}
+                timeout={300}
+                classNames="fade"
+                unmountOnExit
+              >
+                <div className="Content">
+                  <Component />
+                </div>
+              </CSSTransition>
+            )}
           </Route>
         ))}
-      </ContentPortal>
+      </div>
     </BrowserRouter>
   </div>
 );
