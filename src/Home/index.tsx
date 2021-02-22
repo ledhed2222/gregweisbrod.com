@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { Header } from '../components';
 import './index.css';
 
-const Home = (): ReactNode => (
+const Home = (): JSX.Element => (
   <div className="Home">
     <Header>
       Hi there!
