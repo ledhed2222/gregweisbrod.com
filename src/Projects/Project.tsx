@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-import { Header, Paragraph } from '../components';
+import { Header, Paragraph } from '../components'
 
 export interface Props {
   title: string,
@@ -21,6 +21,6 @@ const Project = (props: Props): JSX.Element => (
       <Paragraph>{props.desc}</Paragraph>
     </div>
   </div>
-);
+)
 
-export default Project;
+export default Project

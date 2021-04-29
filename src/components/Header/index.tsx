@@ -1,8 +1,8 @@
-import React from 'react';
-import classnames from 'classnames';
+import React from 'react'
+import classnames from 'classnames'
 
-import { ComponentProps } from '../index';
-import './index.css';
+import { ComponentProps } from '../index'
+import './index.css'
 
 type Props = ComponentProps & {
   small?: true,
@@ -18,6 +18,6 @@ const Header = (props: Props): JSX.Element => (
   >
     { props.children }
   </header>
-);
+)
 
-export default Header;
+export default Header

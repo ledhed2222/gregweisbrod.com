@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-import { Header } from '../components';
-import './index.css';
+import { Header } from '../components'
+import './index.css'
 
 const Home = (): JSX.Element => (
   <div className="Home">
@@ -12,6 +12,6 @@ const Home = (): JSX.Element => (
       Welcome to my little slice of the Internet <span role="img" aria-label="wave">👋</span>
     </Header>
   </div>
-);
+)
 
-export default Home;
+export default Home

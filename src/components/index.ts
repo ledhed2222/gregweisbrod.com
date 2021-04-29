@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 
-import Header from './Header';
-import Paragraph from './Paragraph';
+import Header from './Header'
+import Paragraph from './Paragraph'
 
 export interface ComponentProps {
   className?: string,
@@ -11,4 +11,4 @@ export interface ComponentProps {
 export {
   Header,
   Paragraph,
-};
+}

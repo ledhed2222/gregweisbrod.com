@@ -1,8 +1,8 @@
-import React from 'react';
-import classnames from 'classnames';
+import React from 'react'
+import classnames from 'classnames'
 
-import { ComponentProps } from '../index';
-import './index.css';
+import { ComponentProps } from '../index'
+import './index.css'
 
 type Props = ComponentProps & {
   indent?: true,
@@ -20,4 +20,4 @@ const Paragraph = (props: Props): JSX.Element => (
   </p>
 )
 
-export default Paragraph;
+export default Paragraph
