@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-import { Header, Paragraph } from '../components';
+import { Header, Paragraph } from '../components'
 
-const EMAIL = 'greg.weisbrod@gmail.com';
+const EMAIL = 'greg.weisbrod@gmail.com'
 
 const About = (): JSX.Element => (
   <div className="About">
@@ -19,6 +19,6 @@ const About = (): JSX.Element => (
       You may contact me at <a href={`mailto:${EMAIL}`} target="_blank" rel="noopener noreferrer">{EMAIL}</a>.
     </Paragraph>
   </div>
-);
+)
 
-export default About;
+export default About

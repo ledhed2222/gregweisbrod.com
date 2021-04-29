@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-import { Header } from '../components';
-import Project, { Props as ProjectType } from './Project';
-import xpringRuby from './xpring-ruby.png';
-import ewitool from './ewitool.png';
-import supercollider_cubes from './supercollider_cubes.gif';
-import './index.css';
+import { Header } from '../components'
+import Project, { Props as ProjectType } from './Project'
+import xpringRuby from './xpring-ruby.png'
+import ewitool from './ewitool.png'
+import supercollider_cubes from './supercollider_cubes.gif'
+import './index.css'
 
 const PROJECT_LIST: Array<ProjectType> = [
   {
@@ -26,7 +26,7 @@ const PROJECT_LIST: Array<ProjectType> = [
     desc: 'EWItool is an open-source controller and patch editor for the Akai EWI4000s wind synthesizer.',
     link: 'https://github.com/ledhed2222/EWItool',
   },
-];
+]
 
 const Projects = (): JSX.Element => (
   <div className="Projects">
@@ -35,6 +35,6 @@ const Projects = (): JSX.Element => (
     </Header>
     { PROJECT_LIST.map((project, i) => <Project key={i} {...project} />) }
   </div>
-);
+)
 
-export default Projects;
+export default Projects
