@@ -30,6 +30,19 @@
             "value": "max-age=31536000"
           }
         ]
+      },
+      {
+        "source": ".well-known/xrp-ledger.toml",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/toml"
+          }
+        ]
       }
     ]
   }
