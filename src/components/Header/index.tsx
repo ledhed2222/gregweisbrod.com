@@ -1,22 +1,16 @@
-import React from 'react'
 import classnames from 'classnames'
+import React from 'react'
 
-import { ComponentProps } from '../index'
+import { ComponentProps } from '../types'
 import './index.css'
 
 type Props = ComponentProps & {
-  small?: true,
+  small?: true
 }
 
-const Header = (props: Props): JSX.Element => (
-  <header
-    className={classnames(
-      'Header',
-      props.className,
-      { small: props.small },
-    )}
-  >
-    { props.children }
+const Header = ({ className, small, children }: Props): JSX.Element => (
+  <header className={classnames('Header', className, { small })}>
+    {children}
   </header>
 )
 

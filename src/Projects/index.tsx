@@ -1,13 +1,14 @@
 import React from 'react'
 
 import { Header } from '../components'
-import Project, { Props as ProjectType } from './Project'
-import xpringRuby from './xpring-ruby.png'
+
 import ewitool from './ewitool.png'
+import Project, { Props as ProjectType } from './Project'
 import supercollider_cubes from './supercollider_cubes.gif'
+import xpringRuby from './xpring-ruby.png'
 import './index.css'
 
-const PROJECT_LIST: Array<ProjectType> = [
+const PROJECT_LIST: ProjectType[] = [
   {
     title: 'SuperCollider Cubes (WIP)',
     imageSrc: supercollider_cubes,
@@ -30,10 +31,16 @@ const PROJECT_LIST: Array<ProjectType> = [
 
 const Projects = (): JSX.Element => (
   <div className="Projects">
-    <Header>
-      Projects
-    </Header>
-    { PROJECT_LIST.map((project, i) => <Project key={i} {...project} />) }
+    <Header>Projects</Header>
+    {PROJECT_LIST.map((project) => (
+      <Project
+        key={project.title}
+        title={project.title}
+        imageSrc={project.imageSrc}
+        desc={project.desc}
+        link={project.link}
+      />
+    ))}
   </div>
 )
 
