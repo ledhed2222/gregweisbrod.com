@@ -15,8 +15,17 @@
     "@types/react-transition-group": "^4.4.2",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
+    "@xrplf/eslint-config": "^1.4.0",
+    "@xrplf/prettier-config": "^1.2.0",
     "classnames": "^2.3.1",
     "eslint": "^7.32.0",
+    "eslint-plugin-array-func": "^3.1.7",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-jsdoc": "^36.0.8",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-tsdoc": "^0.2.14",
+    "prettier": "^2.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
@@ -30,26 +39,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "git checkout master && git pull && npm run build && firebase deploy",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx"
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint-fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix"
   },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-      "@typescript-eslint"
-    ],
-    "extends": [
-      "react-app",
-      "eslint:recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
-    ],
-    "rules": {
-      "semi": [
-        "warn",
-        "never"
-      ]
-    }
-  },
+  "prettier": "@xrplf/prettier-config",
   "browserslist": {
     "production": [
       ">0.2%",

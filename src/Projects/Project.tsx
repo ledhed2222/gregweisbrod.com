@@ -3,22 +3,22 @@ import React from 'react'
 import { Header, Paragraph } from '../components'
 
 export interface Props {
-  title: string,
-  imageSrc: string,
-  desc: string,
-  link: string,
+  title: string
+  imageSrc: string
+  desc: string
+  link: string
 }
 
-const Project = (props: Props): JSX.Element => (
+const Project = ({ link, title, desc, imageSrc }: Props): JSX.Element => (
   <div className="Project">
-    <a href={props.link} target="_blank" rel="noopener noreferrer">
-      <img src={props.imageSrc} className="ProjectImg" alt="" />
+    <a href={link} target="_blank" rel="noopener noreferrer">
+      <img src={imageSrc} className="ProjectImg" alt="" />
     </a>
     <div className="ProjectCopy">
-      <a href={props.link} target="_blank" rel="noopener noreferrer">
-        <Header small>{props.title}</Header>
+      <a href={link} target="_blank" rel="noopener noreferrer">
+        <Header small>{title}</Header>
       </a>
-      <Paragraph>{props.desc}</Paragraph>
+      <Paragraph>{desc}</Paragraph>
     </div>
   </div>
 )

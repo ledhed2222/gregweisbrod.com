@@ -1,22 +1,20 @@
-import React from 'react'
 import classnames from 'classnames'
+import React from 'react'
 
-import { ComponentProps } from '../index'
+import { ComponentProps } from '../types'
 import './index.css'
 
 type Props = ComponentProps & {
-  indent?: true,
+  indent?: true
 }
 
-const Paragraph = (props: Props): JSX.Element => (
+const Paragraph = ({ className, indent, children }: Props): JSX.Element => (
   <p
-    className={classnames(
-      'Paragraph',
-       props.className,
-       { indent: props.indent },
-    )}
+    className={classnames('Paragraph', className, {
+      indent,
+    })}
   >
-    { props.children }
+    {children}
   </p>
 )
 
