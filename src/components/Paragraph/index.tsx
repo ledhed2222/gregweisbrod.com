@@ -8,14 +8,10 @@ type Props = ComponentProps & {
   indent?: true
 }
 
-const Paragraph = ({ className, indent, children }: Props): JSX.Element => (
-  <p
-    className={classnames('Paragraph', className, {
-      indent,
-    })}
-  >
-    {children}
-  </p>
-)
+function Paragraph({ indent, children, className }: Props): JSX.Element {
+  return (
+    <p className={classnames('Paragraph', className, { indent })}>{children}</p>
+  )
+}
 
 export default Paragraph

@@ -22,16 +22,16 @@
   padding: 20px 0 0 0;
 }
 
-.App .ContentPortal .Content.fade-enter {
+.App .ContentPortal .Content .fade-enter {
   opacity: 0;
 }
 
-.App .ContentPortal .Content.fade-enter-active {
+.App .ContentPortal .Content .fade-enter-active {
   opacity: 1;
   transition: opacity 250ms ease-in;
 }
 
-.App .ContentPortal .Content.fade-exit {
+.App .ContentPortal .Content .fade-exit {
   display: none;
 }
 

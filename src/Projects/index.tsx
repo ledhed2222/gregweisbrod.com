@@ -29,19 +29,21 @@ const PROJECT_LIST: ProjectType[] = [
   },
 ]
 
-const Projects = (): JSX.Element => (
-  <div className="Projects">
-    <Header>Projects</Header>
-    {PROJECT_LIST.map((project) => (
-      <Project
-        key={project.title}
-        title={project.title}
-        imageSrc={project.imageSrc}
-        desc={project.desc}
-        link={project.link}
-      />
-    ))}
-  </div>
-)
+function Projects(): JSX.Element {
+  return (
+    <div className="Projects">
+      <Header>Projects</Header>
+      {PROJECT_LIST.map((project) => (
+        <Project
+          key={project.title}
+          title={project.title}
+          imageSrc={project.imageSrc}
+          desc={project.desc}
+          link={project.link}
+        />
+      ))}
+    </div>
+  )
+}
 
 export default Projects
