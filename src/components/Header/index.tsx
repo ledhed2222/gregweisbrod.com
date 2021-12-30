@@ -8,10 +8,12 @@ type Props = ComponentProps & {
   small?: true
 }
 
-const Header = ({ className, small, children }: Props): JSX.Element => (
-  <header className={classnames('Header', className, { small })}>
-    {children}
-  </header>
-)
+function Header({ className, children, small }: Props): JSX.Element {
+  return (
+    <header className={classnames('Header', className, { small })}>
+      {children}
+    </header>
+  )
+}
 
 export default Header

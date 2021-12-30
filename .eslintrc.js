@@ -1,38 +1,50 @@
-/* eslint-disable import/unambiguous, import/no-commonjs, import/no-unused-modules --
- * linter config */
 module.exports = {
   root: true,
+
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.eslint.json',
+    tsconfigRootDir: __dirname,
+    project: ['./tsconfig.json'],
+    sourceType: 'module',
+    ecmaFeatures: {
+      impliedStrict: true,
+    },
   },
+
+  env: {
+    es6: true,
+    browser: true,
+  },
+
   extends: ['@xrplf'],
+
   rules: {
-    'node/no-missing-import': 'off',
     'jsdoc/require-jsdoc': 'off',
-    // TODO add to general config
-    '@typescript-eslint/no-unused-vars-experimental': 'off',
-    'func-style': ['warn', 'expression'],
+    '@typescript-eslint/naming-convention': 'off',
+
+    // TODO these need to be factored in to the general config
     'react/jsx-filename-extension': [
-      'error',
+      2,
       {
         extensions: ['.jsx', '.tsx'],
       },
     ],
-    'node/file-extension-in-import': [
-      'error',
-      'always',
+    'node/no-missing-import': [
+      2,
       {
-        '.ts': 'never',
-        '.tsx': 'never',
+        tryExtensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     ],
+    'node/file-extension-in-import': 'off',
     'import/no-unassigned-import': [
-      'warn',
+      1,
       {
         allow: ['**/*.css'],
       },
     ],
     'react/require-default-props': 'off',
+
+    // TODO can't figure out how to get this to work with tsx
+    '@typescript-eslint/no-unused-vars-experimental': 'off',
   },
 }

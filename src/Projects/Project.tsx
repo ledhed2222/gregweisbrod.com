@@ -9,18 +9,20 @@ export interface Props {
   link: string
 }
 
-const Project = ({ link, title, desc, imageSrc }: Props): JSX.Element => (
-  <div className="Project">
-    <a href={link} target="_blank" rel="noopener noreferrer">
-      <img src={imageSrc} className="ProjectImg" alt="" />
-    </a>
-    <div className="ProjectCopy">
+function Project({ link, title, desc, imageSrc }: Props): JSX.Element {
+  return (
+    <div className="Project">
       <a href={link} target="_blank" rel="noopener noreferrer">
-        <Header small>{title}</Header>
+        <img src={imageSrc} className="ProjectImg" alt="" />
       </a>
-      <Paragraph>{desc}</Paragraph>
+      <div className="ProjectCopy">
+        <a href={link} target="_blank" rel="noopener noreferrer">
+          <Header small>{title}</Header>
+        </a>
+        <Paragraph>{desc}</Paragraph>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default Project

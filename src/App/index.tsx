@@ -1,8 +1,13 @@
-/* eslint-disable @typescript-eslint/naming-convention --
- * see use of Component */
-import React from 'react'
-import { BrowserRouter, Route, NavLink } from 'react-router-dom'
-import { CSSTransition } from 'react-transition-group'
+import classnames from 'classnames'
+import React, { ReactNode } from 'react'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  NavLink,
+  useLocation,
+} from 'react-router-dom'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 import About from '../About'
 import Home from '../Home'
@@ -33,43 +38,74 @@ const ROUTES: RouteDef[] = [
   },
 ]
 
-/* eslint-disable max-lines-per-function --
- * TODO */
-const App = (): JSX.Element => (
-  <div className="App">
-    <BrowserRouter>
-      <nav className="NavBar">
-        <ul>
-          {ROUTES.map(({ path, routeName }) => (
-            <li key={path}>
-              <NavLink exact to={path} activeClassName="currentPage">
-                {routeName}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div className="ContentPortal">
-        {ROUTES.map(({ path, Component }) => (
-          <Route exact path={path} key={path}>
-            {({ match }): JSX.Element => (
-              <CSSTransition
-                in={match != null}
-                timeout={300}
-                classNames="fade"
-                unmountOnExit
-              >
-                <div className="Content">
-                  <Component />
-                </div>
-              </CSSTransition>
-            )}
-          </Route>
-        ))}
-      </div>
-    </BrowserRouter>
-  </div>
-)
-/* eslint-enable max-lines-per-function */
+function TheLinks(): JSX.Element {
+  return (
+    <ul>
+      {ROUTES.map(({ path, routeName }) => (
+        <li key={path}>
+          <NavLink
+            to={path}
+            className={({ isActive }): string =>
+              classnames({ currentPage: isActive })
+            }
+          >
+            {routeName}
+          </NavLink>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+interface RouteWrapperProps {
+  children: ReactNode
+}
+
+function RouteWrapper({ children }: RouteWrapperProps): JSX.Element {
+  const { key: locationKey } = useLocation()
+
+  return (
+    <TransitionGroup component={null}>
+      <CSSTransition key={locationKey} classNames="fade" timeout={300}>
+        {children}
+      </CSSTransition>
+    </TransitionGroup>
+  )
+}
+
+function TheRoutes(): JSX.Element {
+  return (
+    <Routes>
+      {ROUTES.map(({ path, Component }) => (
+        <Route
+          path={path}
+          key={path}
+          element={
+            <RouteWrapper>
+              <Component />
+            </RouteWrapper>
+          }
+        />
+      ))}
+    </Routes>
+  )
+}
+
+function App(): JSX.Element {
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <nav className="NavBar">
+          <TheLinks />
+        </nav>
+        <div className="ContentPortal">
+          <div className="Content">
+            <TheRoutes />
+          </div>
+        </div>
+      </BrowserRouter>
+    </div>
+  )
+}
 
 export default App
