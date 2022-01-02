@@ -6,7 +6,6 @@ import ewitool from './ewitool.png'
 import Project, { Props as ProjectType } from './Project'
 import supercollider_cubes from './supercollider_cubes.gif'
 import xpringRuby from './xpring-ruby.png'
-import './index.css'
 
 const PROJECT_LIST: ProjectType[] = [
   {
@@ -29,7 +28,7 @@ const PROJECT_LIST: ProjectType[] = [
   },
 ]
 
-function Projects(): JSX.Element {
+export default function Projects(): JSX.Element {
   return (
     <div className="Projects">
       <Header>Projects</Header>
@@ -45,5 +44,3 @@ function Projects(): JSX.Element {
     </div>
   )
 }
-
-export default Projects

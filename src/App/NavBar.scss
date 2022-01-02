@@ -1,0 +1,21 @@
+@use "../common";
+
+.NavBar {
+  width: 100%;
+  border-bottom: 1px solid common.$text-color;
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    list-style: none;
+
+    & > li {
+      margin: 0 40px 0 0;
+
+      .currentPage {
+        color: common.$link-color;
+      }
+    }
+  }
+}
