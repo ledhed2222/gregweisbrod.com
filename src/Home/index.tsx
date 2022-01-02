@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { Header } from '../components'
-import './index.css'
+import './index.scss'
 
-function Home(): JSX.Element {
+export default function Home(): JSX.Element {
   return (
     <div className="Home">
       <Header>Hi there!</Header>
@@ -16,5 +16,3 @@ function Home(): JSX.Element {
     </div>
   )
 }
-
-export default Home

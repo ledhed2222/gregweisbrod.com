@@ -39,7 +39,7 @@ module.exports = {
     'import/no-unassigned-import': [
       1,
       {
-        allow: ['**/*.css'],
+        allow: ['**/*.scss'],
       },
     ],
     'react/require-default-props': 'off',

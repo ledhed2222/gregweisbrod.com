@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Header, Paragraph } from '../components'
+import './Project.scss'
 
 export interface Props {
   title: string
@@ -9,7 +10,12 @@ export interface Props {
   link: string
 }
 
-function Project({ link, title, desc, imageSrc }: Props): JSX.Element {
+export default function Project({
+  link,
+  title,
+  desc,
+  imageSrc,
+}: Props): JSX.Element {
   return (
     <div className="Project">
       <a href={link} target="_blank" rel="noopener noreferrer">
@@ -24,5 +30,3 @@ function Project({ link, title, desc, imageSrc }: Props): JSX.Element {
     </div>
   )
 }
-
-export default Project

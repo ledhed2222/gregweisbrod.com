@@ -4,7 +4,7 @@ import { Header, Paragraph } from '../components'
 
 const EMAIL = 'greg.weisbrod@gmail.com'
 
-function About(): JSX.Element {
+export default function About(): JSX.Element {
   return (
     <div className="About">
       <Header>About Me</Header>
@@ -32,5 +32,3 @@ function About(): JSX.Element {
     </div>
   )
 }
-
-export default About
