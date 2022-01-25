@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { CSSTransition as CST, TransitionGroup } from 'react-transition-group'
 
 import ROUTES from './ROUTES'
 import './ContentPortal.scss'
@@ -14,9 +14,9 @@ function RouteWrapper({ children }: RouteWrapperProps): JSX.Element {
 
   return (
     <TransitionGroup component={null}>
-      <CSSTransition key={locationKey} classNames="fade" timeout={300}>
+      <CST key={locationKey} classNames="fade" timeout={300}>
         {children}
-      </CSSTransition>
+      </CST>
     </TransitionGroup>
   )
 }
