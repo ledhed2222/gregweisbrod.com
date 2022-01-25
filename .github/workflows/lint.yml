@@ -16,6 +16,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup node
         uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
       - name: Display node version
         run: node -v
       - name: Install dependencies
