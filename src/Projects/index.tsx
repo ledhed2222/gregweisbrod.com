@@ -3,16 +3,23 @@ import React from 'react'
 import { Header } from '../components'
 
 import ewitool from './ewitool.png'
+import nftDemo from './nftDemo.png'
 import Project, { Props as ProjectType } from './Project'
-import supercollider_cubes from './supercollider_cubes.gif'
-import xpringRuby from './xpring-ruby.png'
+import supercolliderCubes from './supercolliderCubes.gif'
+import xpringRuby from './xpringRuby.png'
 
 const PROJECT_LIST: ProjectType[] = [
   {
     title: 'SuperCollider Cubes (WIP)',
-    imageSrc: supercollider_cubes,
+    imageSrc: supercolliderCubes,
     desc: 'Interactive web-based real-time synthesizer using HLS/WebRTC and WebSockets for audio streaming. All synthesis happens on the server and is streamed to all clients',
     link: 'https://github.com/ledhed2222/supercollider_cubes',
+  },
+  {
+    title: 'NFT Marketplace on XRPL',
+    imageSrc: nftDemo,
+    desc: 'Proof-of-concept NFT marketplace on the XRPL ledger.',
+    link: 'https://github.com/ledhed2222/nftdemo',
   },
   {
     title: 'xpring-ruby',
