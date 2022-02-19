@@ -8,26 +8,25 @@ on:
 
 jobs:
   build_and_deploy:
-    deploy:
-      name: Deploy
-      runs-on: ubuntu-latest
+    name: Deploy
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout code
-        - uses: actions/checkout@v2
-        - name: Setup node
-          uses: actions/setup-node@v1
-          with:
-            node-version: 16.x
-        - name: Display node version
-          run: node -v
-        - name: Display npm version
-          run: npm -v
-        - name: Build and deploy
-          run: npm ci && npm run build
-          uses: FirebaseExtended/action-hosting-deploy@v0
-          with:
-            repoToken: '${{ secrets.GITHUB_TOKEN }}'
-            firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GREGWEISBRODSITE }}'
-            channelId: live
-            projectId: gregweisbrodsite
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Display node version
+        run: node -v
+      - name: Display npm version
+        run: npm -v
+      - name: Build and deploy
+        run: npm ci && npm run build
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GREGWEISBRODSITE }}'
+          channelId: live
+          projectId: gregweisbrodsite
