@@ -35,10 +35,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "git checkout master && git pull && npm run build && firebase deploy",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx"
   },
   "prettier": "@xrplf/prettier-config",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
