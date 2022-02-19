@@ -22,8 +22,11 @@ jobs:
         run: node -v
       - name: Display npm version
         run: npm -v
-      - name: Build and deploy
-        run: npm ci && npm run build
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
