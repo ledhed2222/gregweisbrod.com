@@ -1,44 +1,24 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { CSSTransition as CST, TransitionGroup } from 'react-transition-group'
+import { TransitionGroup, CSSTransition as CST } from 'react-transition-group'
 
 import ROUTES from './ROUTES'
 import './ContentPortal.scss'
 
-interface RouteWrapperProps {
-  children: ReactNode
-}
-
-function RouteWrapper({ children }: RouteWrapperProps): JSX.Element {
-  const { key: locationKey } = useLocation()
-
-  return (
-    <TransitionGroup component={null}>
-      <CST key={locationKey} classNames="fade" timeout={300}>
-        {children}
-      </CST>
-    </TransitionGroup>
-  )
-}
-
 export default function ContentPortal(): JSX.Element {
+  const loc = useLocation()
+
   return (
-    <div className="ContentPortal">
-      <div className="Content">
-        <Routes>
-          {ROUTES.map(({ path, Component }) => (
-            <Route
-              path={path}
-              key={path}
-              element={
-                <RouteWrapper>
-                  <Component />
-                </RouteWrapper>
-              }
-            />
-          ))}
-        </Routes>
-      </div>
+    <div className="Content">
+      <TransitionGroup>
+        <CST key={loc.key} classNames="fade" timeout={300}>
+          <Routes location={loc}>
+            {ROUTES.map(({ path, Component }) => (
+              <Route key={path} path={path} element={<Component />} />
+            ))}
+          </Routes>
+        </CST>
+      </TransitionGroup>
     </div>
   )
 }
