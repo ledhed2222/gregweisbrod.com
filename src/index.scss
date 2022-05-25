@@ -8,6 +8,11 @@ body {
   background-color: #282c34;
 }
 
+noscript {
+  background-color: #ffffff;
+  color: #000000;
+}
+
 code {
   font-family: common.$font-family-code;
 }
