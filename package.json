@@ -8,7 +8,7 @@
     "@types/react-dom": "^18.0.11",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-transition-group": "^4.4.5",
-    "@xrplf/eslint-config": "^1.9.1",
+    "@xrplf/eslint-config": "^1.10.1",
     "@xrplf/prettier-config": "^1.9.1",
     "classnames": "^2.3.2",
     "eslint": "^8.37.0",
