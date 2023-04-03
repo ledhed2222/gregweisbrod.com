@@ -1,5 +1,5 @@
 import React from 'react'
-import { createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 import ContentPortal from './ContentPortal'
 import NavBar from './NavBar'
@@ -27,4 +27,6 @@ const router = createBrowserRouter([
   },
 ])
 
-export default router
+export default function AppWithRouter(): JSX.Element {
+  return <RouterProvider router={router} />
+}

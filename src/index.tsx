@@ -2,9 +2,8 @@
  * main entry point */
 import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { RouterProvider } from 'react-router-dom'
 
-import router from './App'
+import AppWithRouter from './App'
 import './index.scss'
 
 const container = window.document.getElementById('root')
@@ -12,7 +11,7 @@ const container = window.document.getElementById('root')
 if (container) {
   createRoot(container).render(
     <StrictMode>
-      <RouterProvider router={router} />
+      <AppWithRouter />
     </StrictMode>,
   )
 }

@@ -8,7 +8,7 @@ import Project, { Props as ProjectType } from './Project'
 import supercolliderCubes from './supercolliderCubes.gif'
 import xpringRuby from './xpringRuby.png'
 
-const PROJECT_LIST: ProjectType[] = [
+const PROJECTS: ProjectType[] = [
   {
     title: 'SuperCollider Cubes (WIP)',
     imageSrc: supercolliderCubes,
@@ -39,7 +39,7 @@ export default function Projects(): JSX.Element {
   return (
     <div className="Projects">
       <Header>Projects</Header>
-      {PROJECT_LIST.map((project) => (
+      {PROJECTS.map((project) => (
         <Project
           key={project.title}
           title={project.title}
