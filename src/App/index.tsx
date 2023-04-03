@@ -1,17 +1,30 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router-dom'
 
 import ContentPortal from './ContentPortal'
 import NavBar from './NavBar'
+import ROUTES from './ROUTES'
 import './index.scss'
 
-export default function App(): JSX.Element {
+function App(): JSX.Element {
   return (
     <div className="App">
-      <BrowserRouter>
-        <NavBar />
-        <ContentPortal />
-      </BrowserRouter>
+      <NavBar />
+      <ContentPortal />
     </div>
   )
 }
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    children: ROUTES.map((route) => ({
+      index: route.path === '/',
+      path: route.path === '/' ? undefined : route.path,
+      element: route.element,
+    })),
+  },
+])
+
+export default router

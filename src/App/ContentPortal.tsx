@@ -1,25 +1,30 @@
-import React, { useRef } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
-import { TransitionGroup, CSSTransition as CST } from 'react-transition-group'
+import React from 'react'
+import { useLocation, useOutlet } from 'react-router-dom'
+import { SwitchTransition, CSSTransition as CST } from 'react-transition-group'
 
 import ROUTES from './ROUTES'
 import './ContentPortal.scss'
 
 export default function ContentPortal(): JSX.Element {
-  const ref = useRef()
   const loc = useLocation()
+  const out = useOutlet()
+  const nodeRef = ROUTES.find((route) => route.path === loc.pathname)?.nodeRef
 
   return (
     <div className="Content">
-      <TransitionGroup>
-        <CST key={loc.key} classNames="fade" timeout={300} nodeRef={ref}>
-          <Routes location={loc}>
-            {ROUTES.map(({ path, Component }) => (
-              <Route key={path} path={path} element={<Component />} />
-            ))}
-          </Routes>
+      <SwitchTransition>
+        <CST
+          key={loc.key}
+          classNames="fade"
+          timeout={300}
+          nodeRef={nodeRef}
+          unmountOnExit
+        >
+          <div ref={nodeRef} className="TheContent">
+            {out}
+          </div>
         </CST>
-      </TransitionGroup>
+      </SwitchTransition>
     </div>
   )
 }
