@@ -1,3 +1,5 @@
+import React, { ReactNode, RefObject, createRef } from 'react'
+
 import About from '../About'
 import Home from '../Home'
 import Projects from '../Projects'
@@ -5,25 +7,26 @@ import Projects from '../Projects'
 interface RouteDef {
   path: string
   routeName: string
-  Component: () => JSX.Element
+  element: ReactNode
+  nodeRef: RefObject<HTMLDivElement>
 }
 
 const ROUTES: RouteDef[] = [
   {
     path: '/',
     routeName: 'Home',
-    Component: Home,
+    element: <Home />,
   },
   {
     path: '/projects',
     routeName: 'Projects',
-    Component: Projects,
+    element: <Projects />,
   },
   {
     path: '/about',
     routeName: 'About',
-    Component: About,
+    element: <About />,
   },
-]
+].map((route) => Object.assign(route, { nodeRef: createRef<HTMLDivElement>() }))
 
 export default ROUTES

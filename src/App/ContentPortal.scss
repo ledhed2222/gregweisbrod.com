@@ -2,6 +2,7 @@
   width: 95%;
   max-width: 1100px;
   padding: 20px 0 0 0;
+
   .fade-enter {
     opacity: 0;
   }
@@ -12,7 +13,12 @@
   }
 
   .fade-exit {
-    display: none;
+    opacity: 1;
+  }
+
+  .fade-exit-active {
+    opacity: 0;
+    transition: opacity 250ms ease-out;
   }
 
   & > * {
