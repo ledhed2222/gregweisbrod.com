@@ -11,7 +11,7 @@ export default function ContentPortal(): JSX.Element {
   const nodeRef = ROUTES.find((route) => route.path === loc.pathname)?.nodeRef
 
   return (
-    <div className="Content">
+    <div className="ContentPortal">
       <SwitchTransition>
         <CST
           key={loc.key}
@@ -20,7 +20,7 @@ export default function ContentPortal(): JSX.Element {
           nodeRef={nodeRef}
           unmountOnExit
         >
-          <div ref={nodeRef} className="TheContent">
+          <div ref={nodeRef} className="Content">
             {out}
           </div>
         </CST>
