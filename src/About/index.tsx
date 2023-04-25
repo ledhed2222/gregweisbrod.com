@@ -2,8 +2,6 @@ import React from 'react'
 
 import { Header, Paragraph } from '../components'
 
-const EMAIL = 'greg.weisbrod@gmail.com'
-
 export default function About(): JSX.Element {
   return (
     <div className="About">
@@ -21,13 +19,6 @@ export default function About(): JSX.Element {
         This site will hold various personal projects across software and music.
         I might even add a blog in the future if I&apos;m feeling particularly
         ambitious. Thanks for visiting!
-      </Paragraph>
-      <Paragraph>
-        You may contact me at{' '}
-        <a href={`mailto:${EMAIL}`} target="_blank" rel="noopener noreferrer">
-          {EMAIL}
-        </a>
-        .
       </Paragraph>
     </div>
   )
