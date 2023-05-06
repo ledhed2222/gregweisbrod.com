@@ -1,7 +1,7 @@
 # Hey there XRPL fan!
 
 [METADATA]
-modified = 2022-05-25T09:29:00
+modified = 2023-05-06T00:27:00
 
 [[ACCOUNTS]]
 address = "rV3WAvwwXgvPrYiUgSoytn9w3mejtPgLo"
@@ -9,4 +9,3 @@ desc = "Want to tip me in XRP? Do it here!"
 
 [[PRINCIPALS]]
 name = "Greg Weisbrod"
-email = "greg.weisbrod@gmail.com"
