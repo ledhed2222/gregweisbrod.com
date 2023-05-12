@@ -1,10 +1,6 @@
 @use "../common";
 
 .Projects {
-  a {
-    color: common.$link-color;
-  }
-
   .instructions {
     margin: 0 0 50px 0;
   }
@@ -17,6 +13,14 @@
 
     &:nth-child(2n) {
       flex-direction: row-reverse;
+    }
+
+    a {
+      color: common.$link-color;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     .ProjectImg {
