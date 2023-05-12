@@ -1,0 +1,34 @@
+@use "../common";
+
+.Projects {
+  a {
+    color: common.$link-color;
+  }
+
+  .instructions {
+    margin: 0 0 50px 0;
+  }
+
+  .Project {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 0 50px 0;
+
+    &:nth-child(2n) {
+      flex-direction: row-reverse;
+    }
+
+    .ProjectImg {
+      height: 300px;
+
+      @media screen and (max-width: 400px) {
+        display: none;
+      }
+    }
+
+    .ProjectCopy {
+      margin: 0 10%;
+    }
+  }
+}

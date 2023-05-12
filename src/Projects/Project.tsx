@@ -1,20 +1,19 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
-import { Header, Paragraph } from '../components'
-import './Project.scss'
+import { Header } from '../components'
 
-export interface Props {
+interface Props {
   title: string
   imageSrc: string
-  desc: string
   link: string
+  children: ReactNode
 }
 
 export default function Project({
   link,
   title,
-  desc,
   imageSrc,
+  children,
 }: Props): JSX.Element {
   return (
     <div className="Project">
@@ -23,9 +22,9 @@ export default function Project({
       </a>
       <div className="ProjectCopy">
         <a href={link} target="_blank" rel="noopener noreferrer">
-          <Header small>{title}</Header>
+          <Header className="small">{title}</Header>
         </a>
-        <Paragraph>{desc}</Paragraph>
+        {children}
       </div>
     </div>
   )

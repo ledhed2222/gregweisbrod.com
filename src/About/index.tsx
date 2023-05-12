@@ -6,7 +6,7 @@ export default function About(): JSX.Element {
   return (
     <div className="About">
       <Header>About Me</Header>
-      <Paragraph indent>
+      <Paragraph className="indent">
         Hey there, I&apos;m a software engineer based in New York. I&apos;ve
         worked in healthcare tech, e-commerce, and fin tech in various roles, on
         various stacks. But before I entered the software world I was a
