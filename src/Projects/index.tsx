@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Header, Paragraph } from '../components'
+import { ExternalLink, Header, Paragraph } from '../components'
 
 import ewitool from './ewitool.png'
 import nftDemo from './nftDemo.png'
@@ -37,10 +37,7 @@ export default function Projects(): JSX.Element {
       >
         <Paragraph>
           Proof-of-concept NFT marketplace on the{' '}
-          <a href="https://xrpl.org" target="_blank" rel="noopener noreferrer">
-            XRP Ledger
-          </a>
-          .
+          <ExternalLink href="https://xrpl.org">XRP Ledger</ExternalLink>.
         </Paragraph>
       </Project>
       <Project
@@ -51,10 +48,7 @@ export default function Projects(): JSX.Element {
         <Paragraph>
           xpring-ruby is the Ruby client-side library for the Xpring SDK. It
           provides Ruby methods for interacting with the{' '}
-          <a href="https://xrpl.org" target="_blank" rel="noopener noreferrer">
-            XRP Ledger
-          </a>
-          .
+          <ExternalLink href="https://xrpl.org">XRP Ledger</ExternalLink>.
         </Paragraph>
       </Project>
       <Project
@@ -64,13 +58,9 @@ export default function Projects(): JSX.Element {
       >
         <Paragraph>
           EWItool is an open-source controller and patch editor for the{' '}
-          <a
-            href="https://www.akaipro.com/ewi4000s"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <ExternalLink href="https://www.akaipro.com/ewi4000s">
             Akai EWI4000s
-          </a>{' '}
+          </ExternalLink>{' '}
           wind synthesizer.
         </Paragraph>
       </Project>
