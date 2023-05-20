@@ -16,9 +16,6 @@ export default function Projects(): JSX.Element {
   return (
     <div className="Projects">
       <Header>Projects</Header>
-      <Header className="subtitle instructions">
-        (Click the project&#39;s title for more detail)
-      </Header>
       <Project
         title="SuperCollider Cubes (WIP)"
         imageSrc={supercolliderCubes}
