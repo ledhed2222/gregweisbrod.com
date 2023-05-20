@@ -2,6 +2,7 @@ import classnames from 'classnames'
 import React from 'react'
 
 import { ComponentProps } from '../types'
+
 import './index.scss'
 
 type Props = ComponentProps & {
