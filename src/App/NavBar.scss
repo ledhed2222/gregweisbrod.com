@@ -4,6 +4,15 @@
   width: 100%;
   border-bottom: 1px solid common.$text-color;
 
+  .NavLink {
+    color: common.$text-color;
+    text-decoration: none;
+
+    &:hover {
+      color: common.$link-color;
+    }
+  }
+
   ul {
     display: flex;
     flex-direction: row;

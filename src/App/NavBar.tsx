@@ -14,7 +14,7 @@ export default function NavBar(): JSX.Element {
             <NavLink
               to={path}
               className={({ isActive }): string =>
-                classnames({ currentPage: isActive })
+                classnames('NavLink', { currentPage: isActive })
               }
             >
               {routeName}
