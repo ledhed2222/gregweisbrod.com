@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 
-import { Header } from '../components'
+import { ExternalLink, Header } from '../components'
 
 interface Props {
   title: string
@@ -17,13 +17,13 @@ export default function Project({
 }: Props): JSX.Element {
   return (
     <div className="Project">
-      <a href={link} target="_blank" rel="noopener noreferrer">
+      <ExternalLink href={link}>
         <img src={imageSrc} className="ProjectImg" alt="" />
-      </a>
+      </ExternalLink>
       <div className="ProjectCopy">
-        <a href={link} target="_blank" rel="noopener noreferrer">
+        <ExternalLink href={link}>
           <Header className="small">{title}</Header>
-        </a>
+        </ExternalLink>
         {children}
       </div>
     </div>
