@@ -7,7 +7,6 @@ import nftDemo from './nftDemo.png'
 import Project from './Project'
 import supercolliderCubes from './supercolliderCubes.gif'
 import xpringRuby from './xpringRuby.png'
-
 import './index.scss'
 
 /* eslint-disable max-lines-per-function --
