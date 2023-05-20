@@ -1,10 +1,10 @@
 @use "../../common";
 
 .ExternalLink {
-    color: common.$link-color;
-    text-decoration: none;
+  color: common.$link-color;
+  text-decoration: none;
 
-    &:hover {
-        text-decoration: underline;
-    }
+  &:hover {
+    text-decoration: underline;
+  }
 }
