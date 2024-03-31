@@ -15,18 +15,20 @@ function App(): JSX.Element {
   )
 }
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    children: ROUTES.map((route) => ({
-      index: route.path === '/',
-      path: route.path === '/' ? undefined : route.path,
-      element: route.element,
-    })),
-  },
-])
-
 export default function AppWithRouter(): JSX.Element {
-  return <RouterProvider router={router} />
+  return (
+    <RouterProvider
+      router={createBrowserRouter([
+        {
+          path: '/',
+          element: <App />,
+          children: ROUTES.map((route) => ({
+            index: route.path === '/',
+            path: route.path === '/' ? undefined : route.path,
+            element: route.element,
+          })),
+        },
+      ])}
+    />
+  )
 }
