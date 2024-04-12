@@ -4,14 +4,14 @@ import { ExternalLink, Header, Paragraph } from '../components'
 
 import ewitool from './ewitool.png'
 import nftDemo from './nftDemo.png'
-import Project from './Project'
+import { Project } from './Project'
 import supercolliderCubes from './supercolliderCubes.gif'
 import xpringRuby from './xpringRuby.png'
 import './index.scss'
 
 /* eslint-disable max-lines-per-function --
  * there's just a lot of content here */
-export default function Projects(): JSX.Element {
+export function Projects(): JSX.Element {
   return (
     <div className="Projects">
       <Header>Projects</Header>

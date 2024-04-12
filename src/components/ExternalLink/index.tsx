@@ -9,7 +9,7 @@ type Props = ComponentProps & {
   href: string
 }
 
-export default function ExternalLink({
+export function ExternalLink({
   className,
   children,
   href,

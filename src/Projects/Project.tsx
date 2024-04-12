@@ -9,7 +9,7 @@ interface Props {
   children: ReactNode
 }
 
-export default function Project({
+export function Project({
   link,
   title,
   imageSrc,
