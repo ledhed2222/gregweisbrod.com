@@ -2,10 +2,10 @@ import React from 'react'
 import { useLocation, useOutlet } from 'react-router-dom'
 import { SwitchTransition, CSSTransition as CST } from 'react-transition-group'
 
-import ROUTES from './ROUTES'
+import { ROUTES } from './ROUTES'
 import './ContentPortal.scss'
 
-export default function ContentPortal(): JSX.Element {
+export function ContentPortal(): JSX.Element {
   const loc = useLocation()
   const out = useOutlet()
   const nodeRef = ROUTES.find((route) => route.path === loc.pathname)?.nodeRef

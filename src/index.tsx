@@ -3,7 +3,7 @@
 import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import AppWithRouter from './App'
+import { AppWithRouter } from './App'
 import './index.scss'
 
 const container = window.document.getElementById('root')

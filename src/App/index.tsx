@@ -1,9 +1,9 @@
 import React from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import ContentPortal from './ContentPortal'
-import NavBar from './NavBar'
-import ROUTES from './ROUTES'
+import { ContentPortal } from './ContentPortal'
+import { NavBar } from './NavBar'
+import { ROUTES } from './ROUTES'
 import './index.scss'
 
 function App(): JSX.Element {
@@ -15,7 +15,7 @@ function App(): JSX.Element {
   )
 }
 
-export default function AppWithRouter(): JSX.Element {
+export function AppWithRouter(): JSX.Element {
   return (
     <RouterProvider
       router={createBrowserRouter([

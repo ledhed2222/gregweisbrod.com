@@ -5,7 +5,7 @@ import { ComponentProps } from '../types'
 
 import './index.scss'
 
-export default function Paragraph({
+export function Paragraph({
   children,
   className,
 }: ComponentProps): JSX.Element {
