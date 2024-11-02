@@ -1,0 +1,7 @@
+#no-script-root {
+  background: white;
+  color: black;
+  display: flex;
+  margin: 50px;
+  justify-content: center;
+}
