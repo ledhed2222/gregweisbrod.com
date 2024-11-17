@@ -1,8 +1,8 @@
 import React, { ReactNode, RefObject, createRef } from 'react'
 
-import { About } from '../About'
-import { Home } from '../Home'
-import { Projects } from '../Projects'
+import { About } from './About'
+import { Home } from './Home'
+import { Projects } from './Projects'
 
 interface RouteDef {
   path: string

@@ -2,7 +2,7 @@ import classnames from 'classnames'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { ROUTES } from './ROUTES'
+import { ROUTES } from '../ROUTES'
 import './NavBar.scss'
 
 export function NavBar(): JSX.Element {

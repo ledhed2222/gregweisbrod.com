@@ -2,8 +2,10 @@
  * main entry point */
 import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import { AppWithRouter } from './App'
+import { App } from './App'
+import { ROUTES } from './ROUTES'
 import './index.scss'
 
 const container = window.document.getElementById('root')
@@ -11,7 +13,19 @@ const container = window.document.getElementById('root')
 if (container) {
   createRoot(container).render(
     <StrictMode>
-      <AppWithRouter />
+      <RouterProvider
+        router={createBrowserRouter([
+          {
+            path: '/',
+            element: <App />,
+            children: ROUTES.map((route) => ({
+              index: route.path === '/',
+              path: route.path === '/' ? undefined : route.path,
+              element: route.element,
+            })),
+          },
+        ])}
+      />
     </StrictMode>,
   )
 }
