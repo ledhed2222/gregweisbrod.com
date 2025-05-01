@@ -3,18 +3,26 @@
 .Projects {
   .Project {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    margin: 0 0 50px 0;
 
-    &:nth-child(2n+1) {
-      flex-direction: row-reverse;
+    @include common.respond-to(tablet) {
+      flex-direction: column-reverse;
     }
+
+    @include common.respond-to(desktop) {
+      flex-direction: row;
+
+      &:nth-child(2n+1) {
+        flex-direction: row-reverse;
+      }
+    }
+
+    margin: 0 0 50px 0;
 
     .ProjectImg {
       height: 300px;
 
-      @media screen and (max-width: 400px) {
+      @include common.respond-to(phone) {
         display: none;
       }
     }

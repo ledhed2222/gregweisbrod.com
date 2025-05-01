@@ -1,3 +1,5 @@
+@use "sass:map";
+
 $text-color: white;
 $link-color: pink;
 $bg-color: #282c34;
@@ -7,3 +9,29 @@ $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     sans-serif;
 $font-family-code: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+
+$-breakpoint-ranges: (
+    phone: (max: 599px),
+    tablet: (min: 600px, max: 899px),
+    desktop: (min: 900px),
+);
+
+@mixin respond-to($label) {
+    $range: map.get($-breakpoint-ranges, $label);
+
+    @if $range == null {
+        @warn "No `#{$label}` entry known";
+        @content;
+    } @else {
+        $queries: ();
+        @if map.has-key($range, min) {
+            $queries: append($queries, "(min-width: #{map.get($range, min)})", comma);
+        }
+        @if map.has-key($range, max) {
+            $queries: append($queries, "(max-width: #{map.get($range, max)})", comma);
+        }
+        @media #{join($queries, " and ")} {
+            @content;
+        }
+    }
+}
