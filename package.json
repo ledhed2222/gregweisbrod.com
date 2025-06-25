@@ -2,6 +2,7 @@
   "name": "gregweisbrod.com",
   "private": true,
   "dependencies": {
+    "@ledhed2222/prettier-config": "^1.0.0",
     "@types/classnames": "^2.3.4",
     "@types/node": "^20.19.0",
     "@types/react": "^18.3.23",
@@ -9,7 +10,6 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/react-transition-group": "^4.4.12",
     "@xrplf/eslint-config": "^1.10.1",
-    "@xrplf/prettier-config": "^1.9.1",
     "classnames": "^2.5.1",
     "eslint": "^8.57.1",
     "prettier": "^2.8.8",
@@ -28,7 +28,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx"
   },
-  "prettier": "@xrplf/prettier-config",
+  "prettier": "@ledhed2222/prettier-config",
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=8.0.0"
