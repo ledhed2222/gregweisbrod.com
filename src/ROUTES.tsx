@@ -1,8 +1,8 @@
-import { ReactNode, RefObject, createRef } from 'react'
+import { ReactNode, RefObject, createRef, lazy } from 'react'
 
-import { About } from './About'
-import { Home } from './Home'
-import { Projects } from './Projects'
+const Home = lazy(() => import('./Home'))
+const Projects = lazy(() => import('./Projects'))
+const About = lazy(() => import('./About'))
 
 interface RouteDef {
   path: string

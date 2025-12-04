@@ -53,7 +53,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['*.config.{js,ts}', '**/*.d.ts'],
+    files: ['*.config.{js,ts}', '**/*.d.ts', '**/*.{jsx,tsx}'],
     rules: {
       'import/no-default-export': 'off',
     },

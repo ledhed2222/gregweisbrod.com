@@ -1,6 +1,6 @@
 import { Header } from '../components'
 
-export function Home() {
+export default function Home() {
   return (
     <div className="Home">
       <Header>Hi there!</Header>

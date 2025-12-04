@@ -4,6 +4,6 @@ import { ComponentProps } from '../types'
 
 import './index.scss'
 
-export function Header({ className, children }: ComponentProps) {
+export default function Header({ className, children }: ComponentProps) {
   return <header className={classnames('Header', className)}>{children}</header>
 }

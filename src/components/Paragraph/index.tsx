@@ -4,6 +4,6 @@ import { ComponentProps } from '../types'
 
 import './index.scss'
 
-export function Paragraph({ children, className }: ComponentProps) {
+export default function Paragraph({ children, className }: ComponentProps) {
   return <p className={classnames('Paragraph', className)}>{children}</p>
 }

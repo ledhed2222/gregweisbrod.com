@@ -2,6 +2,10 @@
   "name": "gregweisbrod.com",
   "private": true,
   "type": "module",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7"
+  },
   "dependencies": {
     "@eslint/js": "^9.39.1",
     "@ledhed2222/prettier-config": "^1.0.0",
@@ -34,7 +38,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepare": "husky"
   },
   "prettier": "@ledhed2222/prettier-config",
   "engines": {

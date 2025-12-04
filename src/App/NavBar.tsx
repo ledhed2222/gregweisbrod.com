@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { ROUTES } from '../ROUTES'
 import './NavBar.scss'
 
-export function NavBar() {
+export default function NavBar() {
   return (
     <nav className="NavBar">
       <ul>

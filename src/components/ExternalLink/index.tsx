@@ -8,7 +8,7 @@ type Props = ComponentProps & {
   href: string
 }
 
-export function ExternalLink({ className, children, href }: Props) {
+export default function ExternalLink({ className, children, href }: Props) {
   return (
     <a
       target="_blank"
