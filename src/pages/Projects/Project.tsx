@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
 
-import ExternalLink from '../components/ExternalLink'
-import Header from '../components/Header'
+import { ExternalLink, Header } from '../../components'
 
 interface Props {
   title: string

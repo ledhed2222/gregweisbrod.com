@@ -1,4 +1,4 @@
-import { Header, Paragraph } from '../components'
+import { Header, Paragraph } from '../../components'
 
 export default function About() {
   return (
