@@ -1,8 +1,11 @@
 import { ReactNode, RefObject, createRef, lazy } from 'react'
+import { createBrowserRouter } from 'react-router-dom'
 
-const Home = lazy(() => import('./Home'))
-const Projects = lazy(() => import('./Projects'))
-const About = lazy(() => import('./About'))
+import App from './App'
+
+const Home = lazy(() => import('./pages/Home'))
+const Projects = lazy(() => import('./pages/Projects'))
+const About = lazy(() => import('./pages/About'))
 
 interface RouteDef {
   path: string
@@ -11,7 +14,7 @@ interface RouteDef {
   nodeRef: RefObject<HTMLDivElement | null>
 }
 
-const ROUTES: RouteDef[] = [
+export const ROUTES: RouteDef[] = [
   {
     path: '/',
     routeName: 'Home',
@@ -27,6 +30,19 @@ const ROUTES: RouteDef[] = [
     routeName: 'About',
     element: <About />,
   },
-].map((route) => Object.assign(route, { nodeRef: createRef<HTMLDivElement>() }))
+].map((route) => ({
+  ...route,
+  nodeRef: createRef<HTMLDivElement>(),
+}))
 
-export default ROUTES
+export const ROUTER = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    children: ROUTES.map((route) => ({
+      index: route.path === '/',
+      path: route.path === '/' ? undefined : route.path,
+      element: route.element,
+    })),
+  },
+])

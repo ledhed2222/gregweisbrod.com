@@ -1,7 +1,7 @@
 import { useLocation, useOutlet } from 'react-router-dom'
 import { SwitchTransition, CSSTransition as CST } from 'react-transition-group'
 
-import ROUTES from '../ROUTES'
+import { ROUTES } from '../routes'
 import './ContentPortal.scss'
 
 export default function ContentPortal() {

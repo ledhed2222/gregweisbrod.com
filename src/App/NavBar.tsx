@@ -1,7 +1,7 @@
 import classnames from 'classnames'
 import { NavLink } from 'react-router-dom'
 
-import ROUTES from '../ROUTES'
+import { ROUTES } from '../routes'
 import './NavBar.scss'
 
 export default function NavBar() {

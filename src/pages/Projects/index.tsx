@@ -1,4 +1,4 @@
-import { ExternalLink, Header, Paragraph } from '../components'
+import { ExternalLink, Header, Paragraph } from '../../components'
 
 import ewitool from './ewitool.png'
 import nftDemo from './nftDemo.png'
