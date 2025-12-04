@@ -4,7 +4,7 @@ import { SwitchTransition, CSSTransition as CST } from 'react-transition-group'
 import { ROUTES } from '../ROUTES'
 import './ContentPortal.scss'
 
-export function ContentPortal() {
+export default function ContentPortal() {
   const loc = useLocation()
   const out = useOutlet()
   const nodeRef = ROUTES.find((route) => route.path === loc.pathname)?.nodeRef

@@ -1,6 +1,6 @@
 import { Header, Paragraph } from '../components'
 
-export function About() {
+export default function About() {
   return (
     <div className="About">
       <Header>About Me</Header>
