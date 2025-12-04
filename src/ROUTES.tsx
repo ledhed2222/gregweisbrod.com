@@ -11,7 +11,7 @@ interface RouteDef {
   nodeRef: RefObject<HTMLDivElement | null>
 }
 
-export const ROUTES: RouteDef[] = [
+const ROUTES: RouteDef[] = [
   {
     path: '/',
     routeName: 'Home',
@@ -28,3 +28,5 @@ export const ROUTES: RouteDef[] = [
     element: <About />,
   },
 ].map((route) => Object.assign(route, { nodeRef: createRef<HTMLDivElement>() }))
+
+export default ROUTES
