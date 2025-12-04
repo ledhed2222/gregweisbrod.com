@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { Header } from '../components'
 
-export function Home(): JSX.Element {
+export function Home() {
   return (
     <div className="Home">
       <Header>Hi there!</Header>

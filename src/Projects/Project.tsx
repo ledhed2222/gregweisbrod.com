@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 import { ExternalLink, Header } from '../components'
 
@@ -9,12 +9,7 @@ interface Props {
   children: ReactNode
 }
 
-export function Project({
-  link,
-  title,
-  imageSrc,
-  children,
-}: Props): JSX.Element {
+export function Project({ link, title, imageSrc, children }: Props) {
   return (
     <div className="Project">
       <ExternalLink href={link}>

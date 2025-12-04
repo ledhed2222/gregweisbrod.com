@@ -1,6 +1,4 @@
-/* eslint-disable import/no-unused-modules --
- * main entry point */
-import React, { StrictMode } from 'react'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 

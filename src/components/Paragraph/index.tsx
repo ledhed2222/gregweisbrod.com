@@ -1,13 +1,9 @@
 import classnames from 'classnames'
-import React from 'react'
 
 import { ComponentProps } from '../types'
 
 import './index.scss'
 
-export function Paragraph({
-  children,
-  className,
-}: ComponentProps): JSX.Element {
+export function Paragraph({ children, className }: ComponentProps) {
   return <p className={classnames('Paragraph', className)}>{children}</p>
 }

@@ -1,4 +1,4 @@
-import React, { ReactNode, RefObject, createRef } from 'react'
+import { ReactNode, RefObject, createRef } from 'react'
 
 import { About } from './About'
 import { Home } from './Home'
@@ -8,7 +8,7 @@ interface RouteDef {
   path: string
   routeName: string
   element: ReactNode
-  nodeRef: RefObject<HTMLDivElement>
+  nodeRef: RefObject<HTMLDivElement | null>
 }
 
 export const ROUTES: RouteDef[] = [

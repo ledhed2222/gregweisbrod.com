@@ -23,14 +23,17 @@ $-breakpoint-ranges: (
         @warn "No `#{$label}` entry known";
         @content;
     } @else {
-        $queries: ();
+        $query: "";
         @if map.has-key($range, min) {
-            $queries: append($queries, "(min-width: #{map.get($range, min)})", comma);
+            $query: "(min-width: #{map.get($range, min)})";
         }
         @if map.has-key($range, max) {
-            $queries: append($queries, "(max-width: #{map.get($range, max)})", comma);
+            @if $query != "" {
+                $query: $query + " and ";
+            }
+            $query: $query + "(max-width: #{map.get($range, max)})";
         }
-        @media #{join($queries, " and ")} {
+        @media #{$query} {
             @content;
         }
     }

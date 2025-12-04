@@ -1,48 +1,44 @@
 {
   "name": "gregweisbrod.com",
   "private": true,
+  "type": "module",
   "dependencies": {
+    "@eslint/js": "^9.39.1",
     "@ledhed2222/prettier-config": "^1.0.0",
     "@types/classnames": "^2.3.4",
-    "@types/node": "^20.19.25",
-    "@types/react": "^18.3.27",
-    "@types/react-dom": "^18.3.7",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-transition-group": "^4.4.12",
-    "@xrplf/eslint-config": "^1.10.1",
+    "@vitejs/plugin-react": "^5.1.1",
     "classnames": "^2.5.1",
-    "eslint": "^8.57.1",
-    "prettier": "^2.8.8",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.2",
-    "react-scripts": "^5.0.1",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "prettier": "^3.7.4",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "react-router-dom": "^7.10.0",
     "react-transition-group": "^4.4.5",
     "sass": "^1.94.2",
-    "typescript": "^4.9.5"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1",
+    "vite": "^7.2.6"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx"
+    "start": "vite",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "prettier": "@ledhed2222/prettier-config",
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=8.0.0"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }

@@ -1,8 +1,6 @@
-import React from 'react'
-
 import { Header, Paragraph } from '../components'
 
-export function About(): JSX.Element {
+export function About() {
   return (
     <div className="About">
       <Header>About Me</Header>

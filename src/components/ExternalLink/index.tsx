@@ -1,5 +1,4 @@
 import classnames from 'classnames'
-import React from 'react'
 
 import { ComponentProps } from '../types'
 
@@ -9,11 +8,7 @@ type Props = ComponentProps & {
   href: string
 }
 
-export function ExternalLink({
-  className,
-  children,
-  href,
-}: Props): JSX.Element {
+export function ExternalLink({ className, children, href }: Props) {
   return (
     <a
       target="_blank"

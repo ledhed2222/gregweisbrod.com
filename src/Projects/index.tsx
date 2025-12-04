@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { ExternalLink, Header, Paragraph } from '../components'
 
 import ewitool from './ewitool.png'
@@ -9,9 +7,7 @@ import supercolliderCubes from './supercolliderCubes.gif'
 import xpringRuby from './xpringRuby.png'
 import './index.scss'
 
-/* eslint-disable max-lines-per-function --
- * there's just a lot of content here */
-export function Projects(): JSX.Element {
+export function Projects() {
   return (
     <div className="Projects">
       <Header>Projects</Header>
@@ -63,4 +59,3 @@ export function Projects(): JSX.Element {
     </div>
   )
 }
-/* eslint-enable max-lines-per-function */
