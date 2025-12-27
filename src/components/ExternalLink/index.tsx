@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import { ComponentProps } from '../types'
 
@@ -14,7 +14,7 @@ export default function ExternalLink({ className, children, href }: Props) {
       target="_blank"
       rel="noopener noreferrer"
       href={href}
-      className={classnames('ExternalLink', className)}
+      className={clsx('ExternalLink', className)}
     >
       {children}
     </a>

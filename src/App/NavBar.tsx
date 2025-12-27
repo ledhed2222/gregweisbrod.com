@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 import { NavLink } from 'react-router-dom'
 
 import { ROUTES } from '../routes'
@@ -13,7 +13,7 @@ export default function NavBar() {
             <NavLink
               to={path}
               className={({ isActive }): string =>
-                classnames('NavLink', { currentPage: isActive })
+                clsx('NavLink', { currentPage: isActive })
               }
             >
               {routeName}
