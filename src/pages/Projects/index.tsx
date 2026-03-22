@@ -12,9 +12,9 @@ export default function Projects() {
     <div className="Projects">
       <Header>Projects</Header>
       <Project
-        title="SuperCollider Cubes (WIP)"
+        title="SynthChat (WIP)"
         imageSrc={supercolliderCubes}
-        link="https://github.com/ledhed2222/supercollider_cubes"
+        link="https://github.com/ledhed2222/synth_chat"
       >
         <Paragraph>
           Interactive web-based real-time synthesizer using HLS/WebRTC and
