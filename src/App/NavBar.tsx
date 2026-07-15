@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import { NavLink } from 'react-router-dom'
 
+import { InternalLink } from '../components'
 import { ROUTES } from '../routes'
 import './NavBar.scss'
 
@@ -10,14 +10,14 @@ export default function NavBar() {
       <ul>
         {ROUTES.map(({ path, routeName }) => (
           <li key={path}>
-            <NavLink
+            <InternalLink
               to={path}
               className={({ isActive }): string =>
                 clsx('NavLink', { currentPage: isActive })
               }
             >
               {routeName}
-            </NavLink>
+            </InternalLink>
           </li>
         ))}
       </ul>

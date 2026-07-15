@@ -5,26 +5,19 @@
   border-bottom: 1px solid common.$text-color;
 
   .NavLink {
-    color: common.$text-color;
-    text-decoration: none;
+    @include common.link;
 
-    &:hover {
-      color: common.$link-color;
+    &.currentPage {
+      color: common.$text-color;
     }
   }
 
   ul {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
     list-style: none;
 
-    & > li {
-      margin: 0 40px 0 0;
-
-      .currentPage {
-        color: common.$link-color;
-      }
+    li {
+      margin-right: 40px;
     }
   }
 }
