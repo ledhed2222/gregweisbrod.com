@@ -6,6 +6,7 @@ import App from './App'
 const Home = lazy(() => import('./pages/Home'))
 const Projects = lazy(() => import('./pages/Projects'))
 const About = lazy(() => import('./pages/About'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
 interface RouteDef {
   path: string
@@ -35,14 +36,22 @@ export const ROUTES: RouteDef[] = [
   nodeRef: createRef<HTMLDivElement>(),
 }))
 
+export const NOT_FOUND_NODE_REF = createRef<HTMLDivElement>()
+
 export const ROUTER = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    children: ROUTES.map((route) => ({
-      index: route.path === '/',
-      path: route.path === '/' ? undefined : route.path,
-      element: route.element,
-    })),
+    children: [
+      ...ROUTES.map((route) => ({
+        index: route.path === '/',
+        path: route.path === '/' ? undefined : route.path,
+        element: route.element,
+      })),
+      {
+        path: '*',
+        element: <NotFound />,
+      },
+    ],
   },
 ])
