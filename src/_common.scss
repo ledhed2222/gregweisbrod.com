@@ -16,6 +16,15 @@ $-breakpoint-ranges: (
     desktop: (min: 900px),
 );
 
+@mixin link {
+    color: $link-color;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 @mixin respond-to($label) {
     $range: map.get($-breakpoint-ranges, $label);
 

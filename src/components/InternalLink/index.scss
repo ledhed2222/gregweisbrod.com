@@ -1,0 +1,5 @@
+@use '../../common';
+
+.InternalLink {
+  @include common.link;
+}
