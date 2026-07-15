@@ -1,5 +1,6 @@
 export { default as ErrorBoundary } from './ErrorBoundary'
 export { default as ExternalLink } from './ExternalLink'
 export { default as Header } from './Header'
+export { default as InternalLink } from './InternalLink'
 export { default as Loading } from './Loading'
 export { default as Paragraph } from './Paragraph'

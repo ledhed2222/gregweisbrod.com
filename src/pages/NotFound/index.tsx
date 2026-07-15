@@ -1,14 +1,10 @@
-import { Link } from 'react-router-dom'
-
-import { Header, Paragraph } from '../../components'
+import { Header, InternalLink } from '../../components'
 
 export default function NotFound() {
   return (
     <div className="NotFound">
       <Header>Page not found</Header>
-      <Paragraph>
-        <Link to="/">Go back home</Link>
-      </Paragraph>
+      <InternalLink to="/">Go back home</InternalLink>
     </div>
   )
 }
