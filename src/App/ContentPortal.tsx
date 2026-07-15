@@ -1,13 +1,15 @@
 import { useLocation, useOutlet } from 'react-router-dom'
 import { SwitchTransition, CSSTransition as CST } from 'react-transition-group'
 
-import { ROUTES } from '../routes'
+import { NOT_FOUND_NODE_REF, ROUTES } from '../routes'
 import './ContentPortal.scss'
 
 export default function ContentPortal() {
   const loc = useLocation()
   const out = useOutlet()
-  const nodeRef = ROUTES.find((route) => route.path === loc.pathname)?.nodeRef
+  const nodeRef =
+    ROUTES.find((route) => route.path === loc.pathname)?.nodeRef ??
+    NOT_FOUND_NODE_REF
 
   return (
     <div className="ContentPortal">
