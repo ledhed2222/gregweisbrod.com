@@ -1,10 +1,10 @@
 import { ExternalLink, Header, Paragraph } from '../../components'
 
-import ewitool from './ewitool.png'
-import nftDemo from './nftDemo.png'
+import ewitool from './ewitool.webp'
+import nftDemo from './nftDemo.webp'
 import Project from './Project'
-import supercolliderCubes from './supercolliderCubes.gif'
-import xpringRuby from './xpringRuby.png'
+import supercolliderCubes from './supercolliderCubes.webp'
+import xpringRuby from './xpringRuby.webp'
 import './index.scss'
 
 export default function Projects() {
@@ -14,6 +14,7 @@ export default function Projects() {
       <Project
         title="SynthChat (WIP)"
         imageSrc={supercolliderCubes}
+        imageAlt="Rotating 3D cubes representing SynthChat's real-time synthesizer visualization"
         link="https://github.com/ledhed2222/synth_chat"
       >
         <Paragraph>
@@ -25,6 +26,7 @@ export default function Projects() {
       <Project
         title="NFT Marketplace on XRPL"
         imageSrc={nftDemo}
+        imageAlt="Screenshot of the NFT marketplace demo interface"
         link="https://github.com/ledhed2222/nftdemo"
       >
         <Paragraph>
@@ -35,6 +37,7 @@ export default function Projects() {
       <Project
         title="xpring-ruby"
         imageSrc={xpringRuby}
+        imageAlt="xpring-ruby logo"
         link="https://github.com/ledhed2222/xpring-ruby"
       >
         <Paragraph>
@@ -46,6 +49,7 @@ export default function Projects() {
       <Project
         title="EWItool"
         imageSrc={ewitool}
+        imageAlt="EWItool patch editor interface for the Akai EWI4000s"
         link="https://github.com/ledhed2222/EWItool"
       >
         <Paragraph>
