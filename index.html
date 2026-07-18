@@ -32,6 +32,9 @@
   </head>
   <body>
     <noscript>
+      <!-- Separate file, not index.scss: vite dev injects imported CSS via JS,
+           so with JS disabled index.scss never loads. Only vite build extracts
+           it into a static <link>, so this file is needed for the dev server. -->
       <link rel="stylesheet" href="/no-script.css" />
       <div id="no-script-root">
         You need to enable JavaScript to view this page.
