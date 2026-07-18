@@ -1,6 +1,10 @@
+html,
+body {
+  background: #282c34;
+}
+
 #no-script-root {
-  background: white;
-  color: black;
+  color: white;
   display: flex;
   margin: 50px;
   justify-content: center;
