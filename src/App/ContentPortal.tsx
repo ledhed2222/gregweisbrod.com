@@ -4,6 +4,9 @@ import { SwitchTransition, CSSTransition as CST } from 'react-transition-group'
 import { NOT_FOUND_NODE_REF, ROUTES } from '../routes'
 import './ContentPortal.scss'
 
+// Must stay in sync with $transition-time in ContentPortal.scss
+const TRANSITION_MS = 250
+
 export default function ContentPortal() {
   const loc = useLocation()
   const out = useOutlet()
@@ -12,12 +15,12 @@ export default function ContentPortal() {
     NOT_FOUND_NODE_REF
 
   return (
-    <div className="ContentPortal">
+    <main className="ContentPortal">
       <SwitchTransition>
         <CST
           key={loc.key}
           classNames="fade"
-          timeout={300}
+          timeout={TRANSITION_MS}
           nodeRef={nodeRef}
           unmountOnExit
         >
@@ -26,6 +29,6 @@ export default function ContentPortal() {
           </div>
         </CST>
       </SwitchTransition>
-    </div>
+    </main>
   )
 }

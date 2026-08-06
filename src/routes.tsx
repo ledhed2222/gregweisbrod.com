@@ -2,6 +2,7 @@ import { ReactNode, RefObject, createRef, lazy } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 
 import App from './App'
+import { PAGES, PagePath } from './pageDefs'
 
 const Home = lazy(() => import('./pages/Home'))
 const Projects = lazy(() => import('./pages/Projects'))
@@ -15,24 +16,17 @@ interface RouteDef {
   nodeRef: RefObject<HTMLDivElement | null>
 }
 
-export const ROUTES: RouteDef[] = [
-  {
-    path: '/',
-    routeName: 'Home',
-    element: <Home />,
-  },
-  {
-    path: '/projects',
-    routeName: 'Projects',
-    element: <Projects />,
-  },
-  {
-    path: '/about',
-    routeName: 'About',
-    element: <About />,
-  },
-].map((route) => ({
-  ...route,
+// Exhaustive over PagePath: adding a page to pages.ts fails to compile here
+// until its element is supplied.
+const ELEMENTS: Record<PagePath, ReactNode> = {
+  '/': <Home />,
+  '/projects': <Projects />,
+  '/about': <About />,
+}
+
+export const ROUTES: RouteDef[] = PAGES.map((page) => ({
+  ...page,
+  element: ELEMENTS[page.path],
   nodeRef: createRef<HTMLDivElement>(),
 }))
 

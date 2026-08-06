@@ -3,3 +3,7 @@ node_modules
 build
 .firebase/
 .eslintcache
+test-results/
+playwright-report/
+blob-report/
+.playwright-mcp/

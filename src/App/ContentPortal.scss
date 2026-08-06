@@ -1,3 +1,4 @@
+// Must stay in sync with TRANSITION_MS in ContentPortal.tsx
 $transition-time: 250ms;
 
 .ContentPortal {
@@ -21,6 +22,16 @@ $transition-time: 250ms;
   .fade-exit-active {
     opacity: 0;
     transition: opacity $transition-time ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-enter,
+    .fade-enter-active,
+    .fade-exit,
+    .fade-exit-active {
+      opacity: 1;
+      transition: none;
+    }
   }
 
   .Content > * {

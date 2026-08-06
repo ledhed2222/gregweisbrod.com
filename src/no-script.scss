@@ -1,0 +1,15 @@
+// Compiled to /no-script.css by the no-script-css plugin in vite.config.ts.
+// Cannot be imported by the app: it must load with JS disabled. See index.html.
+@use 'common';
+
+html,
+body {
+  background: common.$bg-color;
+}
+
+#no-script-root {
+  color: common.$text-color;
+  display: flex;
+  margin: 50px;
+  justify-content: center;
+}

@@ -18,7 +18,7 @@
     cursor: pointer;
 
     &:hover {
-      background: rgba(255, 192, 203, 0.2);
+      background: common.$link-color-subtle;
     }
   }
 }
