@@ -1,19 +1,30 @@
+import { createHash } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 
 import react from '@vitejs/plugin-react'
 import * as sass from 'sass'
 import { Plugin, defineConfig } from 'vite'
 
-import { PAGES } from './src/pageDefs.ts'
+import { PAGES } from './src/routes/pages.ts'
 
 const SITE_ORIGIN = 'https://gregweisbrod.com'
 
 const NO_SCRIPT_SCSS = fileURLToPath(
-  new URL('./src/no-script.scss', import.meta.url),
+  new URL('./src/NoScript.scss', import.meta.url),
 )
+
+// The href in index.html, and the path the dev middleware answers.
+const NO_SCRIPT_DEV_HREF = '/no-script.css'
 
 function renderNoScriptCss(): string {
   return sass.compile(NO_SCRIPT_SCSS, { style: 'compressed' }).css
+}
+
+// Content-hashed and placed under assets/ so it inherits the immutable
+// cache rule in firebase.json, exactly like Vite's own output.
+function noScriptFileName(css: string): string {
+  const hash = createHash('sha256').update(css).digest('hex').slice(0, 8)
+  return `assets/no-script-${hash}.css`
 }
 
 // no-script.css cannot go through the app's CSS pipeline, since that only
@@ -23,7 +34,7 @@ function noScriptCss(): Plugin {
     name: 'no-script-css',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        if (req.url !== '/no-script.css') {
+        if (req.url !== NO_SCRIPT_DEV_HREF) {
           next()
           return
         }
@@ -32,11 +43,24 @@ function noScriptCss(): Plugin {
       })
     },
     generateBundle() {
+      const css = renderNoScriptCss()
       this.emitFile({
         type: 'asset',
-        fileName: 'no-script.css',
-        source: renderNoScriptCss(),
+        fileName: noScriptFileName(css),
+        source: css,
       })
+    },
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        // Dev is served unhashed by the middleware above; only the build
+        // needs the href repointed at the fingerprinted file.
+        if (ctx.server) {
+          return html
+        }
+        const css = renderNoScriptCss()
+        return html.replace(NO_SCRIPT_DEV_HREF, `/${noScriptFileName(css)}`)
+      },
     },
   }
 }
