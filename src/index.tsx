@@ -1,8 +1,8 @@
-import { StrictMode, Suspense } from 'react'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 
-import { ErrorBoundary, Loading } from './components'
+import { ErrorBoundary } from './components'
 import { ROUTER } from './routes'
 import './index.scss'
 
@@ -13,9 +13,7 @@ if (!container) {
 createRoot(container).render(
   <StrictMode>
     <ErrorBoundary>
-      <Suspense fallback={<Loading />}>
-        <RouterProvider router={ROUTER} />
-      </Suspense>
+      <RouterProvider router={ROUTER} />
     </ErrorBoundary>
   </StrictMode>,
 )

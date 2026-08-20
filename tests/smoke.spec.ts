@@ -84,6 +84,40 @@ test('the delivered HTML carries no source comments', async ({ request }) => {
   expect(html).toContain('G-7C7YZZLCZ3')
 })
 
+// The Suspense boundary lives inside ContentPortal, not at the root, so a page
+// chunk still in flight must not take the nav down with it.
+test('the nav stays on screen while a page chunk loads', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.getByRole('navigation')).toBeVisible()
+
+  // Hold the About chunk open so the suspended state is observable rather
+  // than a race against a fast local server.
+  let release = () => {}
+  const held = new Promise<void>((resolve) => {
+    release = resolve
+  })
+  await page.route('**/assets/About-*.js', async (route) => {
+    await held
+    await route.continue()
+  })
+
+  await page
+    .getByRole('navigation')
+    .getByRole('link', { name: 'About' })
+    .click()
+
+  // The whole point: spinner and nav on screen at the same time.
+  await expect(page.getByRole('status', { name: 'Loading' })).toBeVisible()
+  await expect(page.getByRole('navigation')).toBeVisible()
+  await expect(
+    page.getByRole('navigation').getByRole('link', { name: 'Home' }),
+  ).toBeVisible()
+
+  release()
+  await expect(page.getByText('About Me')).toBeVisible()
+  await expect(page.getByRole('navigation')).toBeVisible()
+})
+
 test.describe('route transitions', () => {
   // The fade duration is only in effect while react-transition-group has a
   // fade-*-active class applied, so a settled .Content reports 0s. These tests
