@@ -35,7 +35,7 @@ Merging to `master` triggers `.github/workflows/firebase-hosting-merge.yml`, whi
 
 ## Architecture
 
-**Routing is the hub, and it spans two files in `src/routes/`.** `pages.ts` holds the bare `PAGES` list (`path`, `routeName`, `component`, `as const`); `index.tsx` builds `ROUTES` from it by resolving each component and attaching a `nodeRef`. Between them they are the single source of truth for four things:
+**Routing is the hub, and it spans two files in `src/routes/`.** `pages.ts` holds the bare `PAGES` list — a `readonly Page[]` of `path`, `routeName`, `component`, where `Page`'s members are all `readonly` so neither the array nor its entries can be mutated; `index.tsx` builds `ROUTES` from it by resolving each component and attaching a `nodeRef`. Between them they are the single source of truth for four things:
 
 1. the router config (`ROUTER`, via `createBrowserRouter`),
 2. the nav links rendered by `src/App/NavBar.tsx`, which maps over `ROUTES`,
@@ -44,7 +44,12 @@ Merging to `master` triggers `.github/workflows/firebase-hosting-merge.yml`, whi
 
 **To add a page**: create `src/pages/<Name>/index.tsx` and add one entry to `PAGES`. Router, nav, sitemap, and tests all follow. The `nodeRef` is attached by the `.map()`, so never hand-write it.
 
-`component` is a plain directory name under `src/pages/`, resolved by `import.meta.glob('../pages/*/index.tsx')` in `routes/index.tsx`. Vite analyses that glob statically, so pages stay code-split into their own chunks. A name with no matching directory throws `No page component found at ...` at module load; the smoke tests catch it, but nothing catches it at compile time, so check the spelling.
+`component` is a plain directory name under `src/pages/`, loaded by `loadPage` in `routes/index.tsx` via ``import(`../pages/${component}/index.tsx`)``. Vite's `dynamic-import-vars` rewrites that into a glob at build time, which is what keeps each page in its own chunk — but **only because the prefix and the file extension are static literals**. Both constraints are enforced, and failing them is quiet:
+
+- Moving the whole path into `PAGES` and calling `import(source)` builds with no error at all, emits zero page chunks, and 404s every route at runtime.
+- Moving just the filename in (``import(`../pages/${source}`)``) at least warns — `A file extension must be included in the static part of the import` — then produces the same broken build.
+
+So the directory name is the most that can live in `PAGES`. A name with no matching directory fails when the route is first rendered, not at module load; the smoke tests catch it, but nothing catches it at compile time, so check the spelling.
 
 **`src/routes/pages.ts` must never reference a page component** — not a static import, not JSX, not even a `() => import('../pages/Home')` loader. `vite.config.ts` imports this file to build the sitemap, and any of those pulls the component graph into Vite's config bundler, which has no SCSS loader and fails to load the config outright. That constraint is the entire reason the two files are split. `NOT_FOUND_NODE_REF` is exported separately because `NotFound` is deliberately absent from `PAGES` (it belongs in neither the nav nor the sitemap).
 
@@ -62,7 +67,7 @@ Merging to `master` triggers `.github/workflows/firebase-hosting-merge.yml`, whi
 
 ## Gotchas
 
-- **`no-script.css` must stay outside the app's CSS pipeline.** In dev, Vite injects imported CSS via JS, so `index.scss` never loads with JS disabled; only `vite build` extracts it to a static `<link>`. The `<noscript>` block in `index.html` therefore links it directly. It is _generated_ from `src/NoScript.scss` by the `no-script-css` plugin in `vite.config.ts`, which is what lets it share `src/_common.scss` instead of hardcoding the palette. Dev serves it unhashed at `/no-script.css` from middleware; the build content-hashes it to `assets/no-script-<hash>.css` and `transformIndexHtml` repoints the `<link>`, so it inherits the immutable `assets/**` cache rule. Never import `src/NoScript.scss` from application code, and don't reintroduce a static copy in `public/`. There is a comment in `index.html` explaining this — leave it.
+- **`no-script.css` must stay outside the app's CSS pipeline.** In dev, Vite injects imported CSS via JS, so `index.scss` never loads with JS disabled; only `vite build` extracts it to a static `<link>`. The `<noscript>` block in `index.html` therefore links it directly. It is _generated_ from `src/no-script.scss` by the `no-script-css` plugin in `vite.config.ts`, which is what lets it share `src/_common.scss` instead of hardcoding the palette. Dev serves it unhashed at `/no-script.css` from middleware; the build content-hashes it to `assets/no-script-<hash>.css` and `transformIndexHtml` repoints the `<link>`, so it inherits the immutable `assets/**` cache rule. Never import `src/no-script.scss` from application code, and don't reintroduce a static copy in `public/`. There is a comment in `index.html` explaining this — leave it.
 - **`vite.config.ts` has a dev-only middleware** redirecting `/.well-known` to `/`. In production Firebase serves `public/.well-known/xrp-ledger.toml` directly with its own CORS and content-type headers.
 - **`sitemap.xml` is generated, not committed.** The `sitemap` plugin in `vite.config.ts` emits it during `generateBundle` and serves it from memory in dev, both from `PAGES`. Don't add a static copy to `public/` — it would be a second source of truth. The absolute URLs come from `SITE_ORIGIN` in `vite.config.ts`, which is the one place the production domain is hardcoded. Unlike `no-script.css` it is deliberately **not** fingerprinted: `robots.txt` and Search Console both point at a fixed path, so it stays at the root and keeps the `no-cache` (revalidate every time) that the catch-all `*` rule gives it.
 - **Dependencies are pinned below the current majors on purpose.** TypeScript is held at 6.x and ESLint at 9.x; both majors are blocked by ecosystem lag (TS 7 ships no JS compiler API and `typescript-eslint` rejects it; ESLint 10 breaks `eslint-plugin-react` and `eslint-plugin-import`, which use APIs removed in v10). Everything else is already at latest. Verify before assuming an upgrade is available.

@@ -74,6 +74,77 @@ test('unknown routes render the not-found page with no console errors', async ({
   expect(problems).toEqual([])
 })
 
+// Fetches the raw document rather than reading the DOM: comments survive
+// parsing as Comment nodes, so this asserts on what is actually served.
+test('the delivered HTML carries no source comments', async ({ request }) => {
+  const html = await (await request.get('/')).text()
+
+  expect(html).not.toContain('<!--')
+  // The stripper must not have eaten the inline analytics script with them.
+  expect(html).toContain('G-7C7YZZLCZ3')
+})
+
+test.describe('route transitions', () => {
+  // The fade duration is only in effect while react-transition-group has a
+  // fade-*-active class applied, so a settled .Content reports 0s. These tests
+  // apply that class directly to read the rule the transition will use.
+  const durationWithFadeClass = (page: Page) =>
+    page
+      .locator('.Content')
+      .first()
+      .evaluate((el) => {
+        el.classList.add('fade-enter-active')
+        const style = getComputedStyle(el)
+        const result = {
+          duration: style.transitionDuration,
+          property: style.transitionProperty,
+          variable: style.getPropertyValue('--transition-time').trim(),
+        }
+        el.classList.remove('fade-enter-active')
+        return result
+      })
+
+  test('resolve the duration defined in ContentPortal.tsx', async ({
+    page,
+  }) => {
+    await page.goto('/')
+
+    const { duration, property, variable } = await durationWithFadeClass(page)
+
+    // Inherited from the inline --transition-time on .ContentPortal.
+    expect(variable).toMatch(/^\d+ms$/)
+
+    // Asserted against the custom property rather than a literal, so this keeps
+    // testing the wiring if TRANSITION_MS changes.
+    const expectedSeconds = Number.parseInt(variable, 10) / 1000
+    expect(duration).toBe(`${expectedSeconds}s`)
+    expect(expectedSeconds).toBeGreaterThan(0)
+    expect(property).toContain('opacity')
+  })
+
+  test('are disabled under prefers-reduced-motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto('/')
+
+    const { duration } = await durationWithFadeClass(page)
+    expect(duration).toBe('0s')
+  })
+
+  test('apply a fade class while navigating between pages', async ({
+    page,
+  }) => {
+    await page.goto('/')
+    await page
+      .getByRole('navigation')
+      .getByRole('link', { name: 'About' })
+      .click()
+
+    // Catches the transition actually running, not just the CSS being present.
+    await expect(page.locator('.Content')).toHaveClass(/fade-(enter|exit)/)
+    await expect(page.getByText('About Me')).toBeVisible()
+  })
+})
+
 test.describe('with JavaScript disabled', () => {
   test.use({ javaScriptEnabled: false })
 

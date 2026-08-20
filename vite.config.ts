@@ -10,7 +10,7 @@ import { PAGES } from './src/routes/pages.ts'
 const SITE_ORIGIN = 'https://gregweisbrod.com'
 
 const NO_SCRIPT_SCSS = fileURLToPath(
-  new URL('./src/NoScript.scss', import.meta.url),
+  new URL('./src/no-script.scss', import.meta.url),
 )
 
 // The href in index.html, and the path the dev middleware answers.
@@ -65,6 +65,28 @@ function noScriptCss(): Plugin {
   }
 }
 
+// Vite minifies JS and CSS but leaves index.html untouched, so source comments
+// would otherwise ship. The alternation matches whole script/style blocks first
+// and returns them unchanged, so a `<!--` inside inline JS is never treated as
+// a comment. Leading whitespace is consumed to avoid leaving a blank line.
+function stripHtmlComments(): Plugin {
+  return {
+    name: 'strip-html-comments',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        if (ctx.server) {
+          return html
+        }
+        return html.replace(
+          /<(script|style)\b[\s\S]*?<\/\1>|\s*<!--[\s\S]*?-->/gi,
+          (match, tag: string | undefined) => (tag ? match : ''),
+        )
+      },
+    },
+  }
+}
+
 function renderSitemap(): string {
   const urls = PAGES.map(
     ({ path }) => `  <url>\n    <loc>${SITE_ORIGIN}${path}</loc>\n  </url>`,
@@ -101,6 +123,8 @@ export default defineConfig({
     react(),
     sitemap(),
     noScriptCss(),
+    // Last, so nothing downstream depends on comment text still being present.
+    stripHtmlComments(),
     {
       name: 'well-known-redirect',
       configureServer(server) {
