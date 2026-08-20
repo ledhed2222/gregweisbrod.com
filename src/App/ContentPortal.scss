@@ -1,5 +1,4 @@
-$transition-time: 250ms;
-
+// --transition-time is set by ContentPortal.tsx, which owns the duration.
 .ContentPortal {
   width: 95%;
   max-width: 1100px;
@@ -11,7 +10,7 @@ $transition-time: 250ms;
 
   .fade-enter-active {
     opacity: 1;
-    transition: opacity $transition-time ease-in;
+    transition: opacity var(--transition-time) ease-in;
   }
 
   .fade-exit {
@@ -20,7 +19,17 @@ $transition-time: 250ms;
 
   .fade-exit-active {
     opacity: 0;
-    transition: opacity $transition-time ease-out;
+    transition: opacity var(--transition-time) ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-enter,
+    .fade-enter-active,
+    .fade-exit,
+    .fade-exit-active {
+      opacity: 1;
+      transition: none;
+    }
   }
 
   .Content > * {

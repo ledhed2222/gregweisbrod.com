@@ -1,4 +1,4 @@
-@use "../../common";
+@use '../../common';
 
 .Projects {
   .Project {
@@ -12,7 +12,7 @@
     @include common.respond-to(desktop) {
       flex-direction: row;
 
-      &:nth-child(2n+1) {
+      &:nth-of-type(even) {
         flex-direction: row-reverse;
       }
     }

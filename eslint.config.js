@@ -8,7 +8,16 @@ import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
   {
-    ignores: ['build/**', 'node_modules/**', 'dist/**'],
+    ignores: [
+      'build/**',
+      'node_modules/**',
+      'dist/**',
+      // Playwright output; the trace viewer bundles are large and minified,
+      // and linting them hangs eslint.
+      'test-results/**',
+      'playwright-report/**',
+      'blob-report/**',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

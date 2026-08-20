@@ -1,4 +1,4 @@
-@use "../common";
+@use '../common';
 
 .NavBar {
   width: 100%;
@@ -9,6 +9,7 @@
 
     &.currentPage {
       color: common.$text-color;
+      text-decoration: underline;
     }
   }
 
