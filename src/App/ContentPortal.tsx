@@ -1,7 +1,8 @@
-import { CSSProperties } from 'react'
+import { CSSProperties, Suspense } from 'react'
 import { useLocation, useOutlet } from 'react-router-dom'
 import { SwitchTransition, CSSTransition as CST } from 'react-transition-group'
 
+import { Loading } from '../components'
 import { NOT_FOUND_NODE_REF, ROUTES } from '../routes'
 import './ContentPortal.scss'
 
@@ -39,8 +40,16 @@ export default function ContentPortal() {
           nodeRef={nodeRef}
           unmountOnExit
         >
+          {/*
+            The Suspense boundary belongs inside .Content, not at the root.
+            Pages are lazy(), so a root boundary suspends App itself and the
+            nav disappears while a chunk loads. Scoped here, only the content
+            region falls back and the nav stays put. It is inside the
+            transition rather than around it so the outgoing page still fades
+            out instead of being replaced by the spinner immediately.
+          */}
           <div ref={nodeRef} className="Content">
-            {out}
+            <Suspense fallback={<Loading />}>{out}</Suspense>
           </div>
         </CST>
       </SwitchTransition>

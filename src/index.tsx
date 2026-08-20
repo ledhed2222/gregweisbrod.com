@@ -13,6 +13,12 @@ if (!container) {
 createRoot(container).render(
   <StrictMode>
     <ErrorBoundary>
+      {/*
+        A backstop only. Lazy pages are caught by the nearer boundary inside
+        ContentPortal, which is what keeps the nav on screen while a chunk
+        loads. This one catches anything that suspends outside the content
+        region, where blanking the app is the correct fallback.
+      */}
       <Suspense fallback={<Loading />}>
         <RouterProvider router={ROUTER} />
       </Suspense>
