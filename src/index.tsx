@@ -12,11 +12,6 @@ if (!container) {
 }
 createRoot(container).render(
   <StrictMode>
-    {/*
-      No Suspense here on purpose. The only lazy things are pages, and their
-      boundary lives inside ContentPortal so the nav survives a chunk load. A
-      root boundary would sit above App and take the nav down with it.
-    */}
     <ErrorBoundary>
       <RouterProvider router={ROUTER} />
     </ErrorBoundary>

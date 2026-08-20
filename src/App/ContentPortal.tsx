@@ -40,14 +40,8 @@ export default function ContentPortal() {
           nodeRef={nodeRef}
           unmountOnExit
         >
-          {/*
-            The Suspense boundary belongs inside .Content, not at the root.
-            Pages are lazy(), so a root boundary suspends App itself and the
-            nav disappears while a chunk loads. Scoped here, only the content
-            region falls back and the nav stays put. It is inside the
-            transition rather than around it so the outgoing page still fades
-            out instead of being replaced by the spinner immediately.
-          */}
+          {/* Inside the transition, not around it, so the outgoing page still
+              fades instead of being swapped for the spinner. */}
           <div ref={nodeRef} className="Content">
             <Suspense fallback={<Loading />}>{out}</Suspense>
           </div>
