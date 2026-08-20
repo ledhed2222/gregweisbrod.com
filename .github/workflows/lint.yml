@@ -1,9 +1,11 @@
 name: Lint
 
+# No `push: branches: [master]`. The pull_request run already tests the merge
+# commit (refs/pull/N/merge), and on master this is invoked by the deploy
+# workflow via workflow_call, so master is still covered without running twice.
 on:
-  push:
-    branches: [master]
   pull_request:
+  workflow_call:
   workflow_dispatch:
 
 jobs:

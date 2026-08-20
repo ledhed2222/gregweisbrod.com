@@ -7,8 +7,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  # Reused rather than duplicated: these are the same workflows the PR checks
+  # run. `needs:` only accepts jobs in this file, which is why they are pulled
+  # in with workflow_call instead of being depended on across workflows.
+  lint:
+    uses: ./.github/workflows/lint.yml
+  test:
+    uses: ./.github/workflows/test.yml
+
   build_and_deploy:
     name: Deploy
+    needs: [lint, test]
     runs-on: ubuntu-latest
 
     steps:
