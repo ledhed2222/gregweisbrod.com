@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "@ledhed2222/stylelint-config/scss",
+    "@ledhed2222/stylelint-config/react"
+  ]
+}

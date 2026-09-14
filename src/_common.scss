@@ -4,13 +4,11 @@ $text-color: white;
 $link-color: pink;
 $link-color-subtle: rgba($link-color, 0.2);
 $bg-color: #282c34;
-
 $font-family:
-  -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+  -apple-system, blinkmacsystemfont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
   'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 $font-family-code:
-  source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-
+  source-code-pro, menlo, monaco, consolas, 'Courier New', monospace;
 $-breakpoint-ranges: (
   phone: (
     max: 599px,
@@ -36,20 +34,24 @@ $-breakpoint-ranges: (
 @mixin respond-to($label) {
   $range: map.get($-breakpoint-ranges, $label);
 
-  @if $range == null {
+  @if not $range {
     @warn "No `#{$label}` entry known";
     @content;
   } @else {
     $query: '';
+
     @if map.has-key($range, min) {
       $query: '(min-width: #{map.get($range, min)})';
     }
+
     @if map.has-key($range, max) {
       @if $query != '' {
         $query: $query + ' and ';
       }
+
       $query: $query + '(max-width: #{map.get($range, max)})';
     }
+
     @media #{$query} {
       @content;
     }
