@@ -1,10 +1,8 @@
-import js from '@eslint/js'
-import prettier from 'eslint-config-prettier'
-import importPlugin from 'eslint-plugin-import'
-import pluginPrettier from 'eslint-plugin-prettier'
-import react from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
 import tseslint from 'typescript-eslint'
+import base from '@ledhed2222/eslint-config'
+import typescript from '@ledhed2222/eslint-config/typescript'
+import react from '@ledhed2222/eslint-config/react'
+import prettier from '@ledhed2222/eslint-config/prettier'
 
 export default tseslint.config(
   {
@@ -19,25 +17,12 @@ export default tseslint.config(
       'blob-report/**',
     ],
   },
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...base,
+  ...typescript,
+  ...react,
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
-    plugins: {
-      react,
-      'react-hooks': reactHooks,
-      import: importPlugin,
-      prettier: pluginPrettier,
-    },
     languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
       globals: {
         window: 'readonly',
         document: 'readonly',
@@ -45,27 +30,6 @@ export default tseslint.config(
         console: 'readonly',
       },
     },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
-    rules: {
-      ...react.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
-      'prettier/prettier': 'error',
-      'import/no-default-export': 'error',
-      'import/prefer-default-export': 'off',
-      '@typescript-eslint/naming-convention': 'off',
-      'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'off',
-    },
   },
-  {
-    files: ['*.config.{js,ts}', '**/*.d.ts', '**/*.{jsx,tsx}'],
-    rules: {
-      'import/no-default-export': 'off',
-    },
-  },
-  prettier,
+  ...prettier,
 )
