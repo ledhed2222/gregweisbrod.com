@@ -4,7 +4,8 @@
   "type": "module",
   "devDependencies": {
     "@eslint/js": "^9.39.4",
-    "@ledhed2222/eslint-config": "^1.0.0",
+    "@ledhed2222/eslint-config": "^1.1.0",
+    "@ledhed2222/htmlhint-config": "^1.0.1",
     "@ledhed2222/prettier-config": "^1.1.0",
     "@ledhed2222/stylelint-config": "^1.0.0",
     "@playwright/test": "^1.62.1",
@@ -45,6 +46,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "stylelint": "stylelint \"src/**/*.scss\"",
+    "htmlhint": "htmlhint-config-lint . --ignore build",
     "test": "playwright test",
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.node.json",
     "prepare": "husky"
@@ -56,7 +58,11 @@
       "stylelint --fix",
       "prettier --write"
     ],
-    "*.{json,md,html}": "prettier --write"
+    "*.{json,md}": "prettier --write",
+    "*.html": [
+      "htmlhint-config-lint",
+      "prettier --write"
+    ]
   },
   "engines": {
     "node": ">=22.22.1",
