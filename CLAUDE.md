@@ -8,6 +8,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev        # vite dev server on port 3000 (alias: npm start)
 npm run typecheck  # tsc -p tsconfig.json && tsc -p tsconfig.node.json
 npm run lint       # eslint .
+npm run stylelint  # stylelint on src/**/*.scss
+npm run htmlhint   # htmlhint on index.html, the only HTML source
 npm run test       # playwright test (integration; builds + previews first)
 npm run build      # npm run typecheck && vite build -> build/
 npm run preview    # serve the production build
@@ -15,17 +17,17 @@ npm run preview    # serve the production build
 
 `typecheck` runs both tsconfigs deliberately. The app config covers `src` and `tests`; the node one covers `vite.config.ts` and `playwright.config.ts`, which would otherwise never be typechecked. Both set `noEmit`, so neither writes output — don't switch this to `tsc -b`, which forces `composite` and litters the repo root with `vite.config.js` and `.tsbuildinfo` files.
 
-**Tests.** `tests/smoke.spec.ts` is the whole suite: it loads every route directly, clicks through the nav, checks the 404 path, and asserts that no route produces a `console.error` or an uncaught exception. It imports `PAGES` from `src/routes/pages`, so adding a page automatically adds coverage — keep it that way rather than hardcoding paths. One block runs with `javaScriptEnabled: false` to cover the `<noscript>` fallback, which the app itself can never exercise.
+**Tests.** `tests/smoke.spec.ts` is the whole suite: it loads every route directly, clicks through the nav, checks the 404 path and the error fallback, and asserts that no route produces a `console.error` or an uncaught exception. It imports `PAGES` from `src/routes/pages`, so adding a page automatically adds coverage — keep it that way rather than hardcoding paths. One block runs with `javaScriptEnabled: false` to cover the `<noscript>` fallback, which the app itself can never exercise.
 
 Playwright's `webServer` runs `npm run build && npm run preview`, so tests hit the **production build**, not the dev server. That means a failure can come from the build as easily as from the app. Locally it reuses an already-running server; in CI it doesn't. Run a single test with `npx playwright test -g "About"`, and debug with `npx playwright test --headed` or `npx playwright show-trace test-results/<dir>/trace.zip`.
 
-Two locator gotchas: `getByRole('heading')` matches nothing on this site, because the `Header` component renders `<header>`, not an `<h1>`–`<h6>`. And Playwright's text engine does not match inside `<noscript>`, so `getByText` finds nothing there even when the element is present and visible — locate by id or CSS instead.
+Locator gotcha: Playwright's text engine does not match inside `<noscript>`, so `getByText` finds nothing there even when the element is present and visible — locate by id or CSS instead.
 
-CI (Node 22) runs lint + typecheck in `.github/workflows/lint.yml` and the integration tests in `.github/workflows/test.yml`; both run on every pull request, and the test workflow re-runs on each push to a PR branch (the `pull_request` event's `synchronize` type) with `concurrency` cancelling the superseded run.
+CI (Node 24) runs eslint, stylelint, htmlhint, and typecheck in `.github/workflows/lint.yml` and the integration tests in `.github/workflows/test.yml`; both run on every pull request, and the test workflow re-runs on each push to a PR branch (the `pull_request` event's `synchronize` type) with `concurrency` cancelling the superseded run. The `master` ruleset requires the `Lint` and `Integration tests` checks by job name, so renaming either job blocks every merge. CodeQL runs separately in `.github/workflows/codeql.yml` and is not required.
 
 `eslint.config.js` must keep ignoring `test-results/`, `playwright-report/`, and `blob-report/`. Flat config does not read `.gitignore`, and linting the trace-viewer bundles inside `playwright-report/` hangs eslint for minutes. CI never hits this because it lints a fresh checkout.
 
-`.husky/pre-commit` runs `lint-staged`: `eslint --fix` on staged JS/TS (which formats too, via `eslint-plugin-prettier`) and `prettier --write` on staged `scss,css,json,md,html`.
+`.husky/pre-commit` runs `lint-staged`: `eslint --fix` on staged JS/TS (which formats too, via `eslint-plugin-prettier`), `stylelint --fix` then `prettier --write` on SCSS/CSS, `htmlhint-config-lint` then `prettier --write` on HTML, and `prettier --write` on JSON and Markdown.
 
 ## Deployment
 
@@ -35,14 +37,13 @@ Merging to `master` triggers `.github/workflows/firebase-hosting-merge.yml`, whi
 
 ## Architecture
 
-**Routing is the hub, and it spans two files in `src/routes/`.** `pages.ts` holds the bare `PAGES` list — a `readonly Page[]` of `path`, `routeName`, `component`, where `Page`'s members are all `readonly` so neither the array nor its entries can be mutated; `index.tsx` builds `ROUTES` from it by resolving each component and attaching a `nodeRef`. Between them they are the single source of truth for four things:
+**Routing is the hub, and it spans two files in `src/routes/`.** `pages.ts` holds the bare `PAGES` list — a `readonly Page[]` of `path`, `routeName`, `component`, where `Page`'s members are all `readonly` so neither the array nor its entries can be mutated; `index.tsx` builds `ROUTER` from it, lazily loading each component. `PAGES` is the single source of truth for three things:
 
 1. the router config (`ROUTER`, via `createBrowserRouter`),
-2. the nav links rendered by `src/App/NavBar.tsx`, which maps over `ROUTES`,
-3. a per-route `nodeRef` that `ContentPortal` needs for page transitions,
-4. `sitemap.xml`, generated by the `sitemap` plugin in `vite.config.ts`.
+2. the nav links rendered by `src/App/NavBar.tsx`, which maps over `PAGES`,
+3. `sitemap.xml`, generated by the `sitemap` plugin in `vite.config.ts`.
 
-**To add a page**: create `src/pages/<Name>/index.tsx` and add one entry to `PAGES`. Router, nav, sitemap, and tests all follow. The `nodeRef` is attached by the `.map()`, so never hand-write it.
+**To add a page**: create `src/pages/<Name>/index.tsx` and add one entry to `PAGES`. Router, nav, sitemap, and tests all follow.
 
 `component` is a plain directory name under `src/pages/`, loaded by `loadPage` in `routes/index.tsx` via ``import(`../pages/${component}/index.tsx`)``. Vite's `dynamic-import-vars` rewrites that into a glob at build time, which is what keeps each page in its own chunk — but **only because the prefix and the file extension are static literals**. Both constraints are enforced, and failing them is quiet:
 
@@ -51,25 +52,28 @@ Merging to `master` triggers `.github/workflows/firebase-hosting-merge.yml`, whi
 
 So the directory name is the most that can live in `PAGES`. A name with no matching directory fails when the route is first rendered, not at module load; the smoke tests catch it, but nothing catches it at compile time, so check the spelling.
 
-**`src/routes/pages.ts` must never reference a page component** — not a static import, not JSX, not even a `() => import('../pages/Home')` loader. `vite.config.ts` imports this file to build the sitemap, and any of those pulls the component graph into Vite's config bundler, which has no SCSS loader and fails to load the config outright. That constraint is the entire reason the two files are split. `NOT_FOUND_NODE_REF` is exported separately because `NotFound` is deliberately absent from `PAGES` (it belongs in neither the nav nor the sitemap).
+**`src/routes/pages.ts` must never reference a page component** — not a static import, not JSX, not even a `() => import('../pages/Home')` loader. `vite.config.ts` imports this file to build the sitemap, and any of those pulls the component graph into Vite's config bundler, which has no SCSS loader and fails to load the config outright. That constraint is the entire reason the two files are split. `NotFound` is deliberately absent from `PAGES` (it belongs in neither the nav nor the sitemap); `routes/index.tsx` adds it as the `*` route.
 
-**Render tree.** `src/index.tsx` mounts `StrictMode > ErrorBoundary > RouterProvider`. There is deliberately **no `Suspense` at the root**: the only lazy things are pages, and a root boundary sits above `App`, so a loading page chunk takes `NavBar` down with it. The single boundary lives in `ContentPortal`, wrapping the outlet inside `.Content`, and sits _inside_ the `CSSTransition` so the outgoing page still fades rather than being swapped for the spinner. `tests/smoke.spec.ts` stalls the About chunk with `page.route` and asserts the spinner and nav are on screen together.
+**Render tree.** `src/index.tsx` mounts `StrictMode > RouterProvider`. There is deliberately **no `Suspense` at the root**: the only lazy things are pages, and a root boundary sits above `App`, so a loading page chunk takes `NavBar` down with it. The single boundary lives in `ContentPortal`, wrapping the outlet inside `.Content`, and sits _inside_ the `CSSTransition` so the outgoing page still fades rather than being swapped for the spinner. `tests/smoke.spec.ts` stalls the About chunk with `page.route` and asserts the spinner and nav are on screen together.
 
 Don't re-add a root boundary "just in case". A suspension with no boundary above it does not crash in React 19 — the root renders empty and recovers when the chunk lands, verified by experiment — so the only thing a root boundary buys is a spinner instead of a blank frame, in a scenario that does not exist while pages are the only lazy modules. If something outside the content region ever does suspend, give it its own boundary with a fallback designed for that spot; `Loading` is styled for the content column (`min-height: 200px`), not for standing in as the whole app.
 
-**Page transitions.** `src/App/ContentPortal.tsx` wraps the outlet in `SwitchTransition` + `CSSTransition`, keyed on `location.key` with a `fade`. React Transition Group needs an explicit `nodeRef` under StrictMode, which is why the refs live on the route definitions rather than being created locally. `TRANSITION_MS` in the `.tsx` is the only definition of the duration: it is written onto the element as the `--transition-time` custom property, and the `.scss` reads it with `var(--transition-time)`. Don't reintroduce a Sass variable for it.
+**Errors.** The fallback UI in `src/components/ErrorBoundary` is the root route's `ErrorBoundary` in `ROUTER`, not a wrapper around `RouterProvider`. React Router wraps the root route in its own error boundary, so a wrapper outside it never sees a render error: the site used to work that way, and visitors got React Router's built-in developer screen, stack trace included. Because the boundary is on the root route, an error replaces the whole app, nav included. `tests/smoke.spec.ts` aborts the About chunk and asserts the fallback renders and that Reload recovers.
+
+**Page transitions.** `src/App/ContentPortal.tsx` wraps the outlet in `SwitchTransition` + `CSSTransition`, keyed on `location.key` with a `fade`. React Transition Group needs an explicit `nodeRef`: without one it calls `findDOMNode`, which React 19 removed. A single `useRef` in `ContentPortal` serves every page, because `SwitchTransition`'s default `out-in` mode unmounts the outgoing page before mounting the incoming one; per-page refs would only matter in `in-out` mode, where both are mounted at once. `TRANSITION_MS` in the `.tsx` is the only definition of the duration: it is written onto the element as the `--transition-time` custom property, and the `.scss` reads it with `var(--transition-time)`. Don't reintroduce a Sass variable for it.
 
 ## Conventions
 
 - **Components are directories**: `ComponentName/index.tsx` + `ComponentName/index.scss`, default-exporting the component. `src/components/index.ts` re-exports them as named exports, so import from `'../../components'`, not the individual paths.
-- **`import/no-default-export` is an eslint error** for plain `.ts`/`.js` files, and turned off for `*.tsx`, `*.jsx`, `*.d.ts`, and `*.config.*`. That is the reason for the default-export-plus-barrel pattern above.
+- **`import-x/no-default-export` is an eslint error** for plain `.ts`/`.js` files, and turned off for `*.tsx`, `*.jsx`, `*.d.ts`, and `*.config.*`. That is the reason for the default-export-plus-barrel pattern above.
 - **Shared prop type**: `ComponentProps` (`className?`, `children`) in `src/components/types.ts`. Components that take a `className` compose it with `clsx('BaseClass', className)`; the SCSS then styles modifiers as `&.small`, `&.subtitle`, etc.
-- **SCSS**: `src/_common.scss` holds the colors, fonts, `link` mixin, and a `respond-to` mixin with `phone`/`tablet`/`desktop` breakpoints. No sass `loadPaths` are configured, so it is imported by relative depth — `@use "../common"`, `@use "../../common"` — and referenced namespaced (`common.$bg-color`).
+- **SCSS**: `src/_common.scss` holds the colors, fonts, `link` mixin, and the `$tablet`/`$desktop` breakpoints. Use those in native range media queries (`@media (width >= common.$tablet) and (width < common.$desktop)`) rather than hardcoding pixel widths. No sass `loadPaths` are configured, so it is imported by relative depth — `@use "../common"`, `@use "../../common"` — and referenced namespaced (`common.$bg-color`).
+- **Headings**: `Header` renders an `h1` by default. Pass `as="h2"` through `as="h6"` for headings within a page (project titles are `h2`). It only renders headings: a subtitle is not one, so Home uses a plain `<p>`. Its `font-weight: normal` keeps the look of the old `<header>` element it replaced.
+- **React Router 8 has no `react-router-dom`.** Import `RouterProvider` from `react-router/dom` and everything else from `react-router`.
 - **Class names match component names** (`.NavBar`, `.Header`, `.Project`). There is no CSS-modules or scoping layer, so keep them unique.
 
 ## Gotchas
 
-- **`no-script.css` must stay outside the app's CSS pipeline.** In dev, Vite injects imported CSS via JS, so `index.scss` never loads with JS disabled; only `vite build` extracts it to a static `<link>`. The `<noscript>` block in `index.html` therefore links it directly. It is _generated_ from `src/no-script.scss` by the `no-script-css` plugin in `vite.config.ts`, which is what lets it share `src/_common.scss` instead of hardcoding the palette. Dev serves it unhashed at `/no-script.css` from middleware; the build content-hashes it to `assets/no-script-<hash>.css` and `transformIndexHtml` repoints the `<link>`, so it inherits the immutable `assets/**` cache rule. Never import `src/no-script.scss` from application code, and don't reintroduce a static copy in `public/`. There is a comment in `index.html` explaining this — leave it.
-- **`vite.config.ts` has a dev-only middleware** redirecting `/.well-known` to `/`. In production Firebase serves `public/.well-known/xrp-ledger.toml` directly with its own CORS and content-type headers.
-- **`sitemap.xml` is generated, not committed.** The `sitemap` plugin in `vite.config.ts` emits it during `generateBundle` and serves it from memory in dev, both from `PAGES`. Don't add a static copy to `public/` — it would be a second source of truth. The absolute URLs come from `SITE_ORIGIN` in `vite.config.ts`, which is the one place the production domain is hardcoded. Unlike `no-script.css` it is deliberately **not** fingerprinted: `robots.txt` and Search Console both point at a fixed path, so it stays at the root and keeps the `no-cache` (revalidate every time) that the catch-all `*` rule gives it.
-- **Dependencies are pinned below the current majors on purpose.** TypeScript is held at 6.x and ESLint at 9.x; both majors are blocked by ecosystem lag (TS 7 ships no JS compiler API and `typescript-eslint` rejects it; ESLint 10 breaks `eslint-plugin-react` and `eslint-plugin-import`, which use APIs removed in v10). Everything else is already at latest. Verify before assuming an upgrade is available.
+- **The `<noscript>` fallback is styled by `index.scss`.** That only works in the production build, where `vite build` extracts the CSS to a static `<link>`; in dev, Vite injects CSS via JS, so with JS disabled the fallback renders unstyled. This is accepted.
+- **`sitemap.xml` is generated, not committed.** The `sitemap` plugin in `vite.config.ts` emits it during `generateBundle` and serves it from memory in dev, both from `PAGES`. Don't add a static copy to `public/` — it would be a second source of truth. The absolute URLs come from `SITE_ORIGIN` in `vite.config.ts`. The domain is also hardcoded in `index.html` (`og:url`, `og:image`, `twitter:image`) and `public/robots.txt`, so change them together. It is deliberately **not** fingerprinted: `robots.txt` and Search Console both point at a fixed path, so it stays at the root and keeps the `no-cache` (revalidate every time) that the catch-all `**` rule gives it.
+- **TypeScript is pinned at 6.x on purpose.** TS 7 ships no JS compiler API, and `typescript-eslint` requires `typescript <6.1.0`. Everything else is at latest. Verify before assuming an upgrade is available.

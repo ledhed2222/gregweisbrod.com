@@ -1,7 +1,8 @@
-import { ComponentType, ReactNode, RefObject, createRef, lazy } from 'react'
-import { createBrowserRouter } from 'react-router-dom'
+import { ComponentType, lazy } from 'react'
+import { createBrowserRouter } from 'react-router'
 
 import App from '../App'
+import { ErrorBoundary } from '../components'
 import { PAGES } from './pages'
 
 // The prefix and the extension must both stay static literals: Vite rewrites
@@ -18,43 +19,23 @@ function loadPage(component: string) {
 // NotFound is not in PAGES: it belongs in neither the nav nor the sitemap.
 const NotFound = lazy(loadPage('NotFound'))
 
-// Not RefObject<HTMLDivElement>: React 19 dropped the implicit null from
-// RefObject, so createRef<T>() now returns RefObject<T | null>. current is
-// null until React attaches the node.
-type NodeRef = RefObject<HTMLDivElement | null>
-
-interface RouteDef {
-  path: string
-  routeName: string
-  element: ReactNode
-  nodeRef: NodeRef
-}
-
-export const ROUTES: RouteDef[] = PAGES.map(
-  ({ path, routeName, component }) => {
-    const Page = lazy(loadPage(component))
-
-    return {
-      path,
-      routeName,
-      element: <Page />,
-      nodeRef: createRef<HTMLDivElement>(),
-    }
-  },
-)
-
-export const NOT_FOUND_NODE_REF: NodeRef = createRef<HTMLDivElement>()
-
 export const ROUTER = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    // React Router wraps the root route in its own error boundary, so a
+    // boundary around RouterProvider never sees a render error.
+    ErrorBoundary,
     children: [
-      ...ROUTES.map((route) => ({
-        index: route.path === '/',
-        path: route.path === '/' ? undefined : route.path,
-        element: route.element,
-      })),
+      ...PAGES.map(({ path, component }) => {
+        const Page = lazy(loadPage(component))
+
+        return {
+          index: path === '/',
+          path: path === '/' ? undefined : path,
+          element: <Page />,
+        }
+      }),
       {
         path: '*',
         element: <NotFound />,

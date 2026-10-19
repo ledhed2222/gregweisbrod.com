@@ -3,24 +3,20 @@
   "private": true,
   "type": "module",
   "devDependencies": {
-    "@eslint/js": "^9.39.4",
-    "@ledhed2222/eslint-config": "^1.1.0",
+    "@eslint-react/eslint-plugin": "^5.28.2",
+    "@ledhed2222/eslint-config": "^2.0.0",
     "@ledhed2222/htmlhint-config": "^1.1.0",
     "@ledhed2222/prettier-config": "^1.1.0",
     "@ledhed2222/stylelint-config": "^1.0.2",
     "@playwright/test": "^1.64.0",
     "@types/node": "^26.6.5",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.5",
-    "@types/react-router-dom": "^5.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@types/react-transition-group": "^4.4.12",
     "@vitejs/plugin-react": "^6.1.2",
-    "eslint": "^9.39.5",
+    "eslint": "^10.13.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.6",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.1.1",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
     "prettier": "^3.9.10",
@@ -33,10 +29,9 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-error-boundary": "^6.1.6",
-    "react-router-dom": "^7.18.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router": "^8.4.0",
     "react-transition-group": "^4.4.5"
   },
   "scripts": {
@@ -46,7 +41,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "stylelint": "stylelint \"src/**/*.scss\"",
-    "htmlhint": "htmlhint-config-lint . --ignore build",
+    "htmlhint": "htmlhint-config-lint index.html",
     "test": "playwright test",
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.node.json",
     "prepare": "husky"
@@ -65,7 +60,7 @@
     ]
   },
   "engines": {
-    "node": ">=22.22.1",
+    "node": ">=24",
     "npm": ">=8.0.0"
   }
 }

@@ -1,9 +1,8 @@
-import { CSSProperties, Suspense } from 'react'
-import { useLocation, useOutlet } from 'react-router-dom'
+import { CSSProperties, Suspense, useRef } from 'react'
+import { useLocation, useOutlet } from 'react-router'
 import { SwitchTransition, CSSTransition as CST } from 'react-transition-group'
 
 import { Loading } from '../components'
-import { NOT_FOUND_NODE_REF, ROUTES } from '../routes'
 import './ContentPortal.scss'
 
 // The only definition of the fade duration. ContentPortal.scss reads it
@@ -26,9 +25,9 @@ const TRANSITION_STYLE = {
 export default function ContentPortal() {
   const loc = useLocation()
   const out = useOutlet()
-  const nodeRef =
-    ROUTES.find((route) => route.path === loc.pathname)?.nodeRef ??
-    NOT_FOUND_NODE_REF
+  // One ref serves every page: SwitchTransition's default out-in mode unmounts
+  // the outgoing page before mounting the incoming one, so they never overlap.
+  const nodeRef = useRef<HTMLDivElement>(null)
 
   return (
     <main className="ContentPortal" style={TRANSITION_STYLE}>

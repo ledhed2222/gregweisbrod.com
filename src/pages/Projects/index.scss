@@ -4,25 +4,22 @@
   .Project {
     display: flex;
     justify-content: space-between;
+    margin: 0 0 50px;
 
-    @include common.respond-to(tablet) {
+    @media (width >= common.$tablet) and (width < common.$desktop) {
       flex-direction: column-reverse;
     }
 
-    @include common.respond-to(desktop) {
-      flex-direction: row;
-
+    @media (width >= common.$desktop) {
       &:nth-of-type(even) {
         flex-direction: row-reverse;
       }
     }
 
-    margin: 0 0 50px;
-
     .ProjectImg {
       height: 300px;
 
-      @include common.respond-to(phone) {
+      @media (width < common.$tablet) {
         display: none;
       }
     }

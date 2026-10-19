@@ -25,7 +25,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- htmlhint-disable script-disabled attr-value-not-empty -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-7C7YZZLCZ3"
@@ -38,22 +37,14 @@
       gtag('js', new Date())
       gtag('config', 'G-7C7YZZLCZ3')
     </script>
-    <!-- htmlhint-enable -->
   </head>
   <body>
     <noscript>
-      <!-- Separate file, not index.scss: vite dev injects imported CSS via JS,
-           so with JS disabled index.scss never loads. Only vite build extracts
-           it into a static <link>, so this file is needed for the dev server.
-           Compiled from src/no-script.scss by the no-script-css plugin in
-           vite.config.ts, so it shares the palette in src/_common.scss. -->
-      <link rel="stylesheet" href="/no-script.css" />
       <div id="no-script-root">
         You need to enable JavaScript to view this page.
       </div>
     </noscript>
     <div id="root"></div>
-    <!-- htmlhint-disable-next-line script-disabled -->
     <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>
