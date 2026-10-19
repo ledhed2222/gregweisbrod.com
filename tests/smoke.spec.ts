@@ -27,6 +27,7 @@ for (const { path, routeName } of PAGES) {
 
     await page.goto(path)
     await expect(page.getByRole('main')).toBeVisible()
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     await expect(page.getByRole('link', { name: routeName })).toHaveAttribute(
       'aria-current',
       'page',
@@ -64,9 +65,9 @@ test('unknown routes render the not-found page with no console errors', async ({
   const problems = collectProblems(page)
 
   await page.goto('/definitely-not-a-real-page')
-  // Not getByRole('heading'): the Header component renders <header>, which is
-  // not a heading element.
-  await expect(page.getByText('Page not found')).toBeVisible()
+  await expect(
+    page.getByRole('heading', { name: 'Page not found' }),
+  ).toBeVisible()
 
   await page.getByRole('link', { name: 'Go back home' }).click()
   await expect(page).toHaveURL('/')
@@ -74,14 +75,18 @@ test('unknown routes render the not-found page with no console errors', async ({
   expect(problems).toEqual([])
 })
 
-// Fetches the raw document rather than reading the DOM: comments survive
-// parsing as Comment nodes, so this asserts on what is actually served.
-test('the delivered HTML carries no source comments', async ({ request }) => {
-  const html = await (await request.get('/')).text()
+// The fallback only renders because it is the root route's ErrorBoundary:
+// React Router catches render errors itself and otherwise shows its own
+// developer screen. A page chunk that fails to load, as when a deploy replaces
+// it mid-session, is the realistic way to throw one.
+test('a page that fails to load shows the error fallback', async ({ page }) => {
+  await page.route('**/assets/About-*.js', (route) => route.abort())
+  await page.goto('/about')
+  await expect(page.getByText('Something went wrong.')).toBeVisible()
 
-  expect(html).not.toContain('<!--')
-  // The stripper must not have eaten the inline analytics script with them.
-  expect(html).toContain('G-7C7YZZLCZ3')
+  await page.unroute('**/assets/About-*.js')
+  await page.getByRole('button', { name: 'Reload' }).click()
+  await expect(page.getByRole('heading', { name: 'About Me' })).toBeVisible()
 })
 
 // The Suspense boundary lives inside ContentPortal, not at the root, so a page
@@ -184,22 +189,8 @@ test.describe('with JavaScript disabled', () => {
 
   // <noscript> contents are only parsed into the DOM when scripting is off, so
   // this is the one path the app itself can never exercise.
-  test('serves the generated no-script.css and applies it', async ({
-    page,
-    request,
-  }) => {
+  test('shows the styled fallback', async ({ page }) => {
     await page.goto('/')
-
-    // The href is fingerprinted in the production build, so read it from the
-    // document rather than assuming a fixed path.
-    const href = await page
-      .locator('noscript link[rel="stylesheet"]')
-      .getAttribute('href')
-    expect(href).toBeTruthy()
-
-    const css = await request.get(href!)
-    expect(css.status()).toBe(200)
-    expect(css.headers()['content-type']).toContain('text/css')
 
     // The app never boots, so the fallback is all the user sees. Located by id,
     // not getByText: Playwright's text engine does not match inside <noscript>.

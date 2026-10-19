@@ -4,13 +4,10 @@
   width: 100%;
   border-bottom: 1px solid common.$text-color;
 
-  .NavLink {
-    @include common.link;
-
-    &.currentPage {
-      color: common.$text-color;
-      text-decoration: underline;
-    }
+  // Added by NavLink to the current page's link.
+  .active {
+    color: common.$text-color;
+    text-decoration: underline;
   }
 
   ul {

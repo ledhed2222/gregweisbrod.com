@@ -29,7 +29,9 @@ export default function Project({
       </ExternalLink>
       <div className="ProjectCopy">
         <ExternalLink href={link}>
-          <Header className="small">{title}</Header>
+          <Header as="h2" className="small">
+            {title}
+          </Header>
         </ExternalLink>
         {children}
       </div>

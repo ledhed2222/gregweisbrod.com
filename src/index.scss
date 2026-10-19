@@ -8,6 +8,9 @@ body {
   background-color: common.$bg-color;
 }
 
-code {
-  font-family: common.$font-family-code;
+#no-script-root {
+  color: common.$text-color;
+  display: flex;
+  margin: 50px;
+  justify-content: center;
 }
